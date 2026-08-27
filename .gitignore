@@ -1,0 +1,6 @@
+# saidas intermediarias dos geradores
+*.svg
+!docs/*.svg
+arte_roda.svg
+__pycache__/
+.DS_Store
