@@ -52,7 +52,7 @@ A folha da roda traz uma **barra de 100 mm** no rodapé: meça com uma régua. S
 100 mm exatos, reimprima com escala `100 × 100 ÷ (o que deu)`. Papel fora de escala é o
 que faz os acordes da borda não caírem dentro da janela.
 
-Rebaixos de 0,35 mm: papel comum ou cartão fino. Cola em bastão ou spray — cola branca
+São três colagens: o mapa de notas no trilho, a etiqueta das formas no topo da régua e a arte da roda nos dois discos. Rebaixos de 0,35 mm: papel comum ou cartão fino. Cola em bastão ou spray — cola branca
 empena o papel.
 
 ## Regerar tudo

@@ -35,7 +35,7 @@ FORMAS=[0,2,4,7,9,12];
 SX0=-80.2; SX1=74.2;
 JW=10.2; JH=10.6; JX=-71.4; JYc=39.2;
 FW=8.8; FH=7.4; FYc=-38.5;
-LW=1.0; Y1=32.8; Y2=38.6; Y3=45.6;
+RX0=-65.0; RX1=65.0; RY0=32.6; RY1=45.2; RPAP=0.35;   // etiqueta das formas
 
 function grau(i,c) = (AFIN[i]+c+OFF)%12;
 function tem(v,g) = len([for(a=v) if(a==g) 1])>0;
@@ -79,17 +79,8 @@ module regua(){
       else if(tem(DIA,g)) translate([xc(c),yc(i),-ST]) rotate([0,0,90])
                             cylinder(h=ST*3, d=8.8, $fn=3);   // triangulo: graus 4 e 7
     }
-    translate([0,0,ST/2-0.35]) linear_extrude(1){                            // tabela das formas
-      for(y=[Y1,Y2,Y3]) translate([xc(0)-LW/2, y-LW/2]) square([xc(12)-xc(0)+LW, LW]);
-      for(k=[0:5]) translate([xc(FORMAS[k])-LW/2, Y1]) square([LW, Y3-Y1]);
-      for(n=[0:4]){
-        xm=(xc(FORMAS[n])+xc(FORMAS[n+1]))/2;
-        translate([xm,(Y2+Y3)/2]) text(str(n+1), size=5.2, halign="center",
-                  valign="center", font="DejaVu Sans:style=Bold");
-        translate([xm,(Y1+Y2)/2]) text(str(((n+1)%5)+1), size=4.0, halign="center",
-                  valign="center", font="DejaVu Sans:style=Bold");
-      }
-    }
+    // rebaixo para a etiqueta das formas (papel colado, nada gravado)
+    translate([RX0, RY0, ST/2-RPAP]) cube([RX1-RX0, RY1-RY0, RPAP+0.01]);
     translate([JX,JYc,0]) cube([JW,JH,ST+2], center=true);                    // janela TOM
     for(c=[0:NC-1]) translate([xc(c),FYc,0]) cube([FW,FH,ST+2], center=true); // janelas das casas
   }

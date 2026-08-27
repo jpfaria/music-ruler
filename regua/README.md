@@ -18,7 +18,8 @@ página 2 a legenda. Recorte um dos dois retângulos (o outro é reserva) e cole
 do trilho.
 
 ### Montagem
-O trilho tem **dois canais empilhados**, cada um com perfil de rabo de andorinha:
+Cole a **etiqueta das formas** no rebaixo do topo da régua antes de montar (página 2 do
+PDF). O trilho tem **dois canais empilhados**, cada um com perfil de rabo de andorinha:
 
 1. **canal de baixo** — entram as duas cortinas, deslizando por uma das pontas
 2. **canal de cima** — entra a régua, do mesmo jeito
@@ -92,7 +93,11 @@ Nada disso é texto gravado no plástico: a legenda completa está no rodapé da
 Ignorando os triângulos você toca pentatônica; usando todos os furos, a escala completa.
 
 ## As 5 formas
-A tabela gravada no topo da régua é uma grade de 5 caixas. **Linha de cima = numeração
+A tabela no topo da régua é uma **etiqueta de papel** (130 × 13 mm) colada num rebaixo —
+sai colorida, uma cor por forma, em vez de gravada no plástico. Ela está na página 2 do
+`arte-trilho.pdf`, com uma cópia de reserva.
+
+É uma grade de 5 caixas. **Linha de cima = numeração
 para tom maior, linha de baixo = para a relativa menor** — as formas são as mesmas, muda
 só por onde você começa a contar:
 

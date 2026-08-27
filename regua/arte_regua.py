@@ -85,6 +85,38 @@ def painel(o,ox,oy):
     o.append(f'<text x="{XN-10.0}" y="{YN}" font-size="3.4" fill="#888">solta</text>')
     o.append('</g>')
 
+# ---------------- etiqueta das formas (cola no rebaixo da regua) -----------
+FORMAS=[0,2,4,7,9,12]
+EX0,EX1,EY0,EY1 = -65.0, 65.0, 32.6, 45.2      # mesmas medidas do rebaixo no .scad
+EW,EH = EX1-EX0, EY1-EY0
+COR_F=["#C62828","#E0670B","#1B7F3B","#1552D8","#6A2FB0"]
+def _esc(c):    # tom mais fundo para a linha de baixo
+    import colorsys as _c
+    r,g,b=int(c[1:3],16)/255,int(c[3:5],16)/255,int(c[5:7],16)/255
+    h,l,s=_c.rgb_to_hls(r,g,b); r,g,b=_c.hls_to_rgb(h,max(0,l*0.62),s)
+    return "#%02X%02X%02X"%(int(r*255+.5),int(g*255+.5),int(b*255+.5))
+def etiqueta(o,ox,oy,rot=True):
+    xc=lambda c: -61.2+c*10.2
+    o.append(f'<rect x="{ox}" y="{oy}" width="{EW}" height="{EH}" fill="#fff" '
+             f'stroke="#C9CDD2" stroke-width=".35"/>')
+    for n in range(5):
+        a,b = ox+xc(FORMAS[n])-EX0, ox+xc(FORMAS[n+1])-EX0
+        c = COR_F[n] if COR else "#fff"; c2 = _esc(COR_F[n]) if COR else "#fff"
+        tx = "#fff" if COR else "#111"
+        o.append(f'<rect x="{a:.2f}" y="{oy}" width="{b-a:.2f}" height="{EH*0.56:.2f}" fill="{c}"/>')
+        o.append(f'<rect x="{a:.2f}" y="{oy+EH*0.56:.2f}" width="{b-a:.2f}" height="{EH*0.44:.2f}" fill="{c2}"/>')
+        if not COR:
+            o.append(f'<rect x="{a:.2f}" y="{oy}" width="{b-a:.2f}" height="{EH}" fill="none" stroke="#111" stroke-width=".4"/>')
+            o.append(f'<line x1="{a:.2f}" y1="{oy+EH*0.56:.2f}" x2="{b:.2f}" y2="{oy+EH*0.56:.2f}" stroke="#111" stroke-width=".3"/>')
+        o.append(f'<text x="{(a+b)/2:.2f}" y="{oy+EH*0.28:.2f}" font-size="5.2" fill="{tx}">{n+1}</text>')
+        o.append(f'<text x="{(a+b)/2:.2f}" y="{oy+EH*0.78:.2f}" font-size="4.0" fill="{tx}">{((n+1)%5)+1}</text>')
+    for n in range(6):
+        x = ox+xc(FORMAS[n])-EX0
+        o.append(f'<line x1="{x:.2f}" y1="{oy}" x2="{x:.2f}" y2="{oy+EH}" stroke="#fff" stroke-width=".7"/>')
+    if rot:
+        o.append(f'<text x="{ox-2.5:.2f}" y="{oy+EH*0.28:.2f}" font-size="3.2" fill="#666" style="text-anchor:end">maior</text>')
+        o.append(f'<text x="{ox-2.5:.2f}" y="{oy+EH*0.78:.2f}" font-size="3.2" fill="#666" style="text-anchor:end">menor</text>')
+
 # ---------------- verificacao ----------------
 JW,JH,JX,JYc=10.2,10.6,-71.4,39.2      # janela TOM na regua (coords do .scad)
 FW,FH,FYc=8.8,7.4,-38.5                # janelas do numero da casa
@@ -129,12 +161,12 @@ def pag2():
         if kind=="p": o.append(f'<polygon points="{x},{y-4.4} {x+3.8},{y+2.2} {x-3.8},{y+2.2}" fill="#17181A"/>')
         if kind=="j": o.append(f'<rect x="{x-5.3}" y="{y-5.3}" width="10.6" height="10.6" fill="none" stroke="#17181A" stroke-width="1.1"/>')
         if kind=="n": o.append(f'<rect x="{x-4.4}" y="{y-3.4}" width="8.8" height="6.8" rx="1.6" fill="none" stroke="#17181A" stroke-width="1.1"/>')
-        o.append(f'<text x="{x+9}" y="{y}" font-size="6.0" fill="#222" style="text-anchor:start">{txt}</text>')
-    L=[("q","quadrado — tônica MAIOR"),("l","losango — tônica da RELATIVA MENOR"),("g","círculo — nota da pentatônica"),
-       ("p","triângulo — graus 4 e 7, só na escala completa"),("j","janela TOM — a tonalidade"),
-       ("n","janelas de baixo — a casa e sua gêmea de oitava")]
-    for k,(kd,tx) in enumerate(L): item(30, 42+k*15, kd, tx)
-    cw,ch,cx,cy=17.6,14.8,30,124
+        o.append(f'<text x="{x+9}" y="{y}" font-size="5.2" fill="#222" style="text-anchor:start">{txt}</text>')
+    L=[("q","quadrado — tônica maior"),("l","losango — tônica da relativa menor"),("g","círculo — nota da pentatônica"),
+       ("p","triângulo — graus 4 e 7"),("j","janela TOM — a tonalidade"),
+       ("n","janelas de baixo — casa + gêmea")]
+    for k,(kd,tx) in enumerate(L): item(18 if k<3 else 168, 36+(k%3)*16, kd, tx)
+    cw,ch,cx,cy=17.6,14.8,20,92
     o.append(f'<polygon points="{cx},{cy} {cx+cw},{cy} {cx},{cy+ch}" fill="{OIT1}"/>')
     o.append(f'<polygon points="{cx+cw},{cy} {cx+cw},{cy+ch} {cx},{cy+ch}" fill="{OIT2}"/>')
     o.append(f'<line x1="{cx+cw}" y1="{cy}" x2="{cx}" y2="{cy+ch}" stroke="#fff" stroke-width=".9"/>')
@@ -150,7 +182,12 @@ def pag2():
          "Cada nota tem sua cor — a mesma da roda de campo harmônico.",
          "Corda mais grave = linha de baixo. Colar o papel no rebaixo do trilho."]
     for k,t in enumerate(txt):
-        o.append(f'<text x="{W/2}" y="{146+k*11}" font-size="5.4" fill="#333">{t}</text>')
+        o.append(f'<text x="{W/2}" y="{120+k*10}" font-size="5.0" fill="#333">{t}</text>')
+    o.append(f'<text x="{W/2}" y="176" font-size="6">ETIQUETA DAS FORMAS — colar no rebaixo da régua</text>')
+    o.append(f'<text x="{W/2}" y="183" font-size="4.2" fill="#666">'
+             f'{EW:.0f} × {EH:.0f} mm · recorte pela linha cinza · a segunda é reserva</text>')
+    etiqueta(o, 24.0, 190.0, True)
+    etiqueta(o, 162.0, 190.0, False)
     o.append('</svg>'); return "\n".join(o)
 
 open("arte_regua.svg","w",encoding="utf-8").write(pag1())
