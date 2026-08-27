@@ -62,9 +62,13 @@ def painel(o,ox,oy):
     # numero da casa (aparece nas janelas da regua)
     for f in range(1,NF+1):
         m=f in MARC
-        o.append(f'<rect x="{xf(f)-4.4:.2f}" y="{YN-3.4:.2f}" width="8.8" height="6.8" rx="1.6" '
+        gemea = f+12 if f<=12 else f-12          # mesma forma, uma oitava de distancia
+        o.append(f'<rect x="{xf(f)-4.4:.2f}" y="{YN-3.5:.2f}" width="8.8" height="7.0" rx="1.6" '
                  f'fill="{"#17181A" if m else "#E4E7EA"}"/>')
-        o.append(f'<text x="{xf(f)}" y="{YN}" font-size="4.3" fill="{"#fff" if m else "#333"}">{f}</text>')
+        o.append(f'<text x="{xf(f)}" y="{YN-1.6:.2f}" font-size="3.6" '
+                 f'fill="{"#fff" if m else "#222"}">{f}</text>')
+        o.append(f'<text x="{xf(f)}" y="{YN+2.3:.2f}" font-size="2.3" '
+                 f'fill="{"#9aa2ab" if m else "#8A9099"}">{gemea}</text>')
     o.append(f'<text x="{XN-10.0}" y="{YN}" font-size="3.4" fill="#888">solta</text>')
     o.append('</g>')
 
@@ -74,13 +78,13 @@ FW,FH,FYc=8.8,7.4,-38.5                # janelas do numero da casa
 err=[]
 if abs((Y0+2.5*RS)-PH/2)>0.01: err.append('cordas fora do centro do papel -> desalinha com os furos')
 if YT+4.9 > Y0-4.7-0.2: err.append("faixa TOM encosta na 1a corda")
-if YN+3.4 > PH-1.0: err.append("pastilha do numero sai do papel")
-if Y0+5*RS+4.7 > YN-3.4: err.append("pastilha do numero bate na 6a corda")
+if YN+3.5 > PH-1.0: err.append("pastilha do numero sai do papel")
+if Y0+5*RS+4.7 > YN-3.5: err.append("pastilha do numero bate na 6a corda")
 p0,p1=PH/2-(JYc+JH/2), PH/2-(JYc-JH/2)
 if not (p0<=YT-4.9 and p1>=YT+4.9): err.append(f"janela TOM nao cobre a celula ({p0:.2f}..{p1:.2f})")
 if JW/2 >= CW-4.9: err.append("janela TOM mostra celula vizinha")
 q0,q1=PH/2-(FYc+FH/2), PH/2-(FYc-FH/2)
-if not (q0<=YN-3.4 and q1>=YN+3.4): err.append(f"janela da casa nao cobre a pastilha ({q0:.2f}..{q1:.2f})")
+if not (q0<=YN-3.5 and q1>=YN+3.5): err.append(f"janela da casa nao cobre a pastilha ({q0:.2f}..{q1:.2f})")
 if xs(1)-4.9 < 0: err.append("celula TOM da casa 1 sai do papel")
 if XN+NF*CW+5 > PW: err.append("casas passam da largura do papel")
 if err: raise SystemExit("ERRO: "+" | ".join(err))
@@ -115,7 +119,7 @@ def pag2():
         o.append(f'<text x="{x+9}" y="{y}" font-size="6.0" fill="#222" style="text-anchor:start">{txt}</text>')
     L=[("q","tônica MAIOR"),("l","tônica da RELATIVA MENOR"),("g","nota da pentatônica"),
        ("p","só na escala completa (graus 4 e 7)"),("j","janela TOM — a tonalidade"),
-       ("n","janelas de baixo — o número da casa")]
+       ("n","janelas de baixo — casa e sua gêmea (5 / 17)")]
     for k,(kd,tx) in enumerate(L): item(30, 42+k*15, kd, tx)
     txt=["Tabela do topo: cada caixa é uma forma. Número de CIMA = tom maior, de BAIXO = relativa menor.",
          "Os traços verticais caem nas casas que duas formas vizinhas dividem.",
