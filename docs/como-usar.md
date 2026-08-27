@@ -13,12 +13,12 @@ Não tem passo 3. A peça inteira é isso.
 |---|---|---|
 | **quadrado** | tônica maior | G |
 | **losango** | tônica da relativa menor | E |
-| **círculo grande** | nota da pentatônica | G A B D E |
-| **círculo pequeno** | só existe na escala completa (graus 4 e 7) | C e F# |
+| **círculo** | nota da pentatônica | G A B D E |
+| **triângulo** | só existe na escala completa (graus 4 e 7) | C e F# |
 
 Daí sai a regra mais útil da peça:
 
-> **Ignore os círculos pequenos → você está tocando pentatônica.
+> **Ignore os triângulos → você está tocando pentatônica.
 > Use todos os furos → escala diatônica completa.**
 
 É a mesma posição de mão. A pentatônica não é uma escala diferente: é a diatônica sem
@@ -71,7 +71,7 @@ Coloque `G / Em` na janela. Toque só os furos dentro da **caixa 1**, da corda m
 para a mais aguda e de volta. Termine no quadrado. Depois caixa 2, caixa 3… até a 5.
 
 **2 — Só pentatônica.**
-Mesma coisa ignorando os círculos pequenos. Compare: é a mesma forma, com dois buracos.
+Mesma coisa ignorando os triângulos. Compare: é a mesma forma, com dois buracos.
 
 **3 — Emendar.**
 Suba pela caixa 1 e, ao chegar na casa do traço, continue na caixa 2 sem parar. Depois
@@ -88,7 +88,7 @@ verdade — o padrão vale nos 12 tons.
 
 ## As duas notas pequenas
 
-Em G, os círculos pequenos são **C** (grau 4) e **F#** (grau 7). Elas são o tempero:
+Em G, os triângulos são **C** (grau 4) e **F#** (grau 7). Elas são o tempero:
 
 - **F#** puxa para o G. Ótima nota para terminar uma subida antes de cair na tônica.
 - **C** briga com o acorde de G maior se você segurar — funciona bem de passagem, mal
@@ -97,6 +97,20 @@ Em G, os círculos pequenos são **C** (grau 4) e **F#** (grau 7). Elas são o t
 É exatamente por isso que a pentatônica existe: tirando essas duas, qualquer nota soa bem
 sobre qualquer acorde do campo. Comece pelos furos grandes e vá adicionando os pequenos
 quando o ouvido pedir.
+
+## Estudar uma forma de cada vez — as cortinas
+
+As duas cortinas correm num canal **abaixo** da régua, entre ela e o papel. Como elas
+tapam o papel, os furos da régua passam a mostrar a chapa lisa delas em vez da nota.
+
+Empurre uma de cada lado até se encontrarem em volta da caixa que você quer: o resto do
+braço apaga e sobra só aquela forma. É a maneira mais honesta de estudar uma posição —
+você não consegue "escapar" para a caixa vizinha sem perceber.
+
+A tabela das formas e o número das casas ficam visíveis o tempo todo, pelos rasgos de
+cima e de baixo das cortinas. Esses mesmos rasgos são onde você põe o dedo para empurrar.
+
+Para voltar ao braço inteiro, empurre as duas para as pontas.
 
 ## Junto com a roda de campo harmônico
 

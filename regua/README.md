@@ -1,16 +1,31 @@
-# Régua de escalas — trilho + régua deslizante
+# Régua de escalas — trilho + régua + cortinas
 
-Mesma lógica da roda: uma camada fixa com toda a informação, uma camada móvel que recorta.
+Mesma lógica da roda: uma camada fixa com toda a informação, camadas móveis que recortam.
 
 ## Imprimir
-| Peça | Tamanho | Peso |
-|---|---|---|
-| `regua_1-TRILHO.stl` | 280 × 108 × 6,6 mm | ~53 g |
-| `regua_2-REGUA-DESLIZANTE.stl` | 154 × 96 × 2,4 mm | ~12 g |
+| Peça | Tamanho | Peso | Quantidade |
+|---|---|---|---|
+| `regua_1-TRILHO.stl` | 280 × 108 × 7,2 mm | ~54 g | 1 |
+| `regua_2-REGUA-DESLIZANTE.stl` | 154 × 95 × 2,4 mm | ~12 g | 1 |
+| `regua_3-CORTINA.stl` | 112 × 96 × 1,8 mm | ~8 g | **2** |
 
-Sem suporte. Bico 0,4 · camada 0,16 · 3 perímetros · 20 %. **PETG.** O trilho tem 280 mm — use **brim de 5 mm**, mesa a 80 °C e a câmara fechada, senão as pontas levantam.
+Sem suporte em nenhuma peça. Bico 0,4 · camada 0,16 · 3 perímetros · 20 %. **PETG.**
+O trilho tem 280 mm — use **brim de 5 mm**, mesa a 80 °C e a câmara fechada, senão as
+pontas levantam.
 
-`arte-trilho.pdf` — **A4 DEITADO**, 100 % / tamanho real. Página 1 traz os dois painéis, página 2 a legenda. Recorte um dos dois retângulos (o outro é reserva) e cole no rebaixo do trilho. As abas laterais seguram a régua; ela entra deslizando por uma das pontas.
+`arte-trilho.pdf` — **A4 DEITADO**, 100 % / tamanho real. Página 1 traz os dois painéis,
+página 2 a legenda. Recorte um dos dois retângulos (o outro é reserva) e cole no rebaixo
+do trilho.
+
+### Montagem
+O trilho tem **dois canais empilhados**, cada um com perfil de rabo de andorinha:
+
+1. **canal de baixo** — entram as duas cortinas, deslizando por uma das pontas
+2. **canal de cima** — entra a régua, do mesmo jeito
+
+Nenhuma peça sai por cima: o canal fecha em 45° e a chapa é mais larga na base que na
+boca. Nada de aba pendurada — foi justamente isso que saiu ruim na versão anterior,
+porque era uma ponte de 1,5 mm impressa no ar.
 
 ## Como funciona
 O trilho traz o **mapa de notas de 24 casas**. A régua tem furos nas notas da escala. Você desliza até a tônica cair no furo certo — e as 5 formas se posicionam sozinhas.
@@ -38,12 +53,29 @@ Os traços verticais caem nas **casas-limite**, que pertencem às duas formas vi
 é por isso que as formas se emendam em vez de ficarem soltas.
 
 ### Em que casa eu estou
-Na borda de baixo da régua há **uma janela por coluna**. Cada uma mostra o número da casa
-impresso no papel. As casas com marcador (3, 5, 7, 9, 12, 15, 17, 19, 21, 24) vêm com o
-número em pastilha preta.
+Na borda de baixo da régua há **uma janela por coluna**. Cada uma mostra um quadrado
+partido na diagonal com **duas** casas: em cima, azul, a casa de 1 a 12; embaixo, laranja,
+a gêmea de 13 a 24. São a mesma forma, 12 casas de distância.
+
+Isso resolve a confusão mais comum da peça: a régua mostra **uma oitava do tom maior**,
+então em `C / Am` ela cobre as casas 8 a 20. A tônica de Am fica 3 casas antes do C, na
+casa 5 — fora da janela. Por isso a **forma 1 de Am aparece na casa 17**, e não na 5.
+Não é outra forma: 17 − 12 = 5.
 
 Na 6ª corda os **dois quadrados** ficam a 12 casas de distância: de um ao outro é uma
 oitava — ali a escala fecha e recomeça.
+
+### Ver uma forma só — as cortinas
+As duas cortinas correm no canal de baixo, **entre o papel e a régua**. Elas tapam o
+papel, então pelos furos da régua você vê a chapa lisa delas em vez da nota.
+
+Empurre uma de cada lado até se encontrarem em volta da forma que quer estudar: só aquela
+caixa fica viva, o resto do braço apaga. Para ver tudo de novo, empurre as duas para as
+pontas.
+
+Cada cortina tem um rasgo em cima e outro embaixo, então a **tabela das formas e o número
+das casas continuam visíveis** o tempo todo — e os rasgos são onde você põe o dedo para
+empurrar (não há pega saliente, ela bateria na régua).
 
 Nada disso é texto gravado no plástico: a legenda completa está no rodapé da folha A4.
 
@@ -54,23 +86,31 @@ Nada disso é texto gravado no plástico: a legenda completa está no rodapé da
 |---|---|
 | Quadrado grande | tônica maior |
 | Losango | tônica menor relativa |
-| Círculo grande | nota da pentatônica |
-| Círculo pequeno | só na diatônica (4 e 7) |
+| Círculo | nota da pentatônica |
+| **Triângulo** | graus 4 e 7 — só na escala completa |
 
-Ignorando os círculos pequenos você toca pentatônica; usando todos, a escala completa.
+Ignorando os triângulos você toca pentatônica; usando todos os furos, a escala completa.
 
 ## As 5 formas
-Os colchetes gravados marcam as 5 formas. **Em cima a numeração para tom maior, embaixo para tom menor** — as formas são as mesmas, muda só por onde você começa a contar (a forma 1 do menor é a forma 5 do maior).
+A tabela gravada no topo da régua é uma grade de 5 caixas. **Linha de cima = numeração
+para tom maior, linha de baixo = para a relativa menor** — as formas são as mesmas, muda
+só por onde você começa a contar:
 
-Os colchetes são escalonados em duas alturas de propósito: formas vizinhas compartilham uma casa, e assim dá pra ver a sobreposição.
+| maior | 1 | 2 | 3 | 4 | 5 |
+|---|---|---|---|---|---|
+| **menor** | 2 | 3 | 4 | 5 | 1 |
+
+Os traços verticais caem nas casas-limite, que pertencem às **duas** formas vizinhas — é
+por ali que você emenda uma na outra sem parar a frase.
 
 ## Por que funciona nos 12 tons
 Porque o espaçamento das casas é **uniforme** — não é maquete de braço real. Deslizar 1 casa = subir 1 semitom, e o desenho continua batendo. Num braço de verdade, onde o espaçamento é logarítmico, isso não funcionaria.
 
 ## Ajustes (`.scad`)
-- Régua folgada demais → `SH` de 96.4 para 97.0, ou `CH` de 2.6 para 2.4
-- Régua presa → `SH` para 96.0 e `CH` para 2.8
+- Régua presa no canal → `SH` de 95.2 para 94.8 (nível 2); cortina presa → `KH` de 96.4 para 96.0
+- Régua ou cortina folgada → aumente `SH` / `KH` em 0,4 mm
+- Balanço vertical → `H1` / `H2` de 2.1 para 2.0 (menos altura de canal)
+- Rabo de andorinha frouxo → aumente a diferença `C1-T1` (hoje 1,3 mm de pega por lado)
 - Peça maior/menor → mexa em `CW` e `RS` no `.scad` **e** no `arte_regua.py` (têm de bater)
-- Aba caindo na impressão → `LT` de 1.0 para 1.4, ou `LIP` de 47.1 para 47.6 (menos balanço)
 - Papel mais grosso → `PAP` de 0.35 para a espessura do seu papel
 - Outra afinação → `AFIN` (classe de altura, da corda grave para a aguda) no `.scad` **e** no `arte_regua.py`

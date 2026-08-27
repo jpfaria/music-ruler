@@ -23,10 +23,13 @@ vermelho tensão. O disco de cima ainda traz as tabelas de intervalos
 Trilho com o mapa de notas de 24 casas + régua deslizante furada nas notas da escala.
 Deslize até a tônica cair no furo e as 5 formas (CAGED) se posicionam sozinhas.
 
-**Quadrado = tônica maior · losango = tônica da relativa menor.** A janela `TOM` mostra
-a tonalidade, e as janelinhas de baixo mostram o número da casa. A mesma peça serve os
-12 tons — porque o espaçamento das casas é uniforme, e não logarítmico como num braço
-de verdade.
+**Quadrado = tônica maior · losango = tônica da relativa menor · círculo = pentatônica ·
+triângulo = graus 4 e 7.** A janela `TOM` mostra a tonalidade, e as janelinhas de baixo
+mostram a casa e a gêmea de oitava. A mesma peça serve os 12 tons — porque o espaçamento
+das casas é uniforme, e não logarítmico como num braço de verdade.
+
+Duas **cortinas** correm num segundo canal, entre o papel e a régua: empurre uma de cada
+lado e só a forma que você está estudando fica visível.
 
 ## Imprimir
 
@@ -34,10 +37,12 @@ de verdade.
 |---|---|---|
 | `roda/stl/roda_1-DISCO-BASE.stl` | ⌀118 × 15,3 mm | ~40 g |
 | `roda/stl/roda_2-DISCO-GIRATORIO.stl` | ⌀110 (+aba 120) × 8 mm | ~20 g |
-| `regua/stl/regua_1-TRILHO.stl` | 280 × 108 × 6,6 mm | ~53 g |
-| `regua/stl/regua_2-REGUA-DESLIZANTE.stl` | 154 × 96 × 2,4 mm | ~12 g |
+| `regua/stl/regua_1-TRILHO.stl` | 280 × 108 × 7,2 mm | ~54 g |
+| `regua/stl/regua_2-REGUA-DESLIZANTE.stl` | 154 × 95 × 2,4 mm | ~12 g |
+| `regua/stl/regua_3-CORTINA.stl` (imprimir **2**) | 112 × 96 × 1,8 mm | ~8 g cada |
 
-Sem suporte em nenhuma peça. Bico 0,4 · camada 0,16 · 3 perímetros · 20 %.
+Sem suporte em nenhuma peça — a retenção é por **rabo de andorinha a 45°**, sem aba
+pendurada. Bico 0,4 · camada 0,16 · 3 perímetros · 20 %.
 **PETG** de preferência. O trilho tem 280 mm de comprimento — brim de 5 mm, mesa a 80 °C
 e câmara fechada, senão as pontas levantam.
 

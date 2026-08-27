@@ -20,7 +20,8 @@ PY
 
 echo "== regua: mecanica"
 $SCAD -o regua/stl/regua_1-TRILHO.stl            -D 'part="trilho"' regua/regua.scad
-$SCAD -o regua/stl/regua_2-REGUA-DESLIZANTE.stl  -D 'part="regua"'  regua/regua.scad
+$SCAD -o regua/stl/regua_2-REGUA-DESLIZANTE.stl  -D 'part="regua"'   regua/regua.scad
+$SCAD -o regua/stl/regua_3-CORTINA.stl           -D 'part="cortina"' regua/regua.scad
 
 echo "== regua: arte"
 ( cd regua && python3 arte_regua.py )
