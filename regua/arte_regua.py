@@ -32,6 +32,14 @@ def tom(f):
     pc=(AFIN[0]+f)%12
     return NOTAS[pc], NOTAS[(pc+9)%12]+"m", pc
 
+# cor por oitava: casas 1-12 azul, casas 13-24 laranja
+OIT1="#1552D8"; OIT2="#C25E00"; OIT1_D="#8FB6FF"; OIT2_D="#FFB061"
+def cor_casa(n,escuro):
+    a = OIT1_D if escuro else OIT1
+    b = OIT2_D if escuro else OIT2
+    return a if n<=12 else b
+_errcasa=[]
+
 def painel(o,ox,oy):
     o.append(f'<g transform="translate({ox},{oy})">')
     o.append(f'<rect x="0" y="0" width="{PW}" height="{PH}" fill="#fff" stroke="#bbb" stroke-width=".3"/>')
@@ -62,13 +70,18 @@ def painel(o,ox,oy):
     # numero da casa (aparece nas janelas da regua)
     for f in range(1,NF+1):
         m=f in MARC
-        gemea = f+12 if f<=12 else f-12          # mesma forma, uma oitava de distancia
-        o.append(f'<rect x="{xf(f)-4.4:.2f}" y="{YN-3.5:.2f}" width="8.8" height="7.0" rx="1.6" '
-                 f'fill="{"#17181A" if m else "#E4E7EA"}"/>')
-        o.append(f'<text x="{xf(f)}" y="{YN-1.6:.2f}" font-size="3.6" '
-                 f'fill="{"#fff" if m else "#222"}">{f}</text>')
-        o.append(f'<text x="{xf(f)}" y="{YN+2.3:.2f}" font-size="2.3" '
-                 f'fill="{"#9aa2ab" if m else "#8A9099"}">{gemea}</text>')
+        baixa = f if f<=12 else f-12             # numero da 1a oitava
+        alta  = baixa+12                          # mesma forma, 12 casas acima
+        w,h=8.8,7.4
+        x0,y0=xf(f)-w/2, YN-h/2; x1,y1=x0+w, y0+h
+        # quadrado partido na diagonal: canto de cima = 1a oitava, de baixo = 2a
+        o.append(f'<polygon points="{x0:.2f},{y0:.2f} {x1:.2f},{y0:.2f} {x0:.2f},{y1:.2f}" fill="{OIT1}"/>')
+        o.append(f'<polygon points="{x1:.2f},{y0:.2f} {x1:.2f},{y1:.2f} {x0:.2f},{y1:.2f}" fill="{OIT2}"/>')
+        o.append(f'<line x1="{x1:.2f}" y1="{y0:.2f}" x2="{x0:.2f}" y2="{y1:.2f}" stroke="#fff" stroke-width=".45"/>')
+        o.append(f'<rect x="{x0:.2f}" y="{y0:.2f}" width="{w}" height="{h}" fill="none" '
+                 f'stroke="{"#17181A" if m else "#FFFFFF"}" stroke-width="{0.8 if m else 0.35}"/>')
+        o.append(f'<text x="{x0+0.29*w:.2f}" y="{y0+0.29*h:.2f}" font-size="3.0" fill="#fff">{baixa}</text>')
+        o.append(f'<text x="{x0+0.71*w:.2f}" y="{y0+0.71*h:.2f}" font-size="3.0" fill="#fff">{alta}</text>')
     o.append(f'<text x="{XN-10.0}" y="{YN}" font-size="3.4" fill="#888">solta</text>')
     o.append('</g>')
 
@@ -113,14 +126,24 @@ def pag2():
         if kind=="q": o.append(f'<rect x="{x-4.3}" y="{y-4.3}" width="8.6" height="8.6" fill="#17181A"/>')
         if kind=="l": o.append(f'<rect x="{x-3.4}" y="{y-3.4}" width="6.9" height="6.9" fill="#17181A" transform="rotate(45 {x} {y})"/>')
         if kind=="g": o.append(f'<circle cx="{x}" cy="{y}" r="4.2" fill="#17181A"/>')
-        if kind=="p": o.append(f'<circle cx="{x}" cy="{y}" r="2.5" fill="#17181A"/>')
+        if kind=="p": o.append(f'<polygon points="{x},{y-4.4} {x+3.8},{y+2.2} {x-3.8},{y+2.2}" fill="#17181A"/>')
         if kind=="j": o.append(f'<rect x="{x-5.3}" y="{y-5.3}" width="10.6" height="10.6" fill="none" stroke="#17181A" stroke-width="1.1"/>')
         if kind=="n": o.append(f'<rect x="{x-4.4}" y="{y-3.4}" width="8.8" height="6.8" rx="1.6" fill="none" stroke="#17181A" stroke-width="1.1"/>')
         o.append(f'<text x="{x+9}" y="{y}" font-size="6.0" fill="#222" style="text-anchor:start">{txt}</text>')
-    L=[("q","tônica MAIOR"),("l","tônica da RELATIVA MENOR"),("g","nota da pentatônica"),
-       ("p","só na escala completa (graus 4 e 7)"),("j","janela TOM — a tonalidade"),
-       ("n","janelas de baixo — casa e sua gêmea (5 / 17)")]
+    L=[("q","quadrado — tônica MAIOR"),("l","losango — tônica da RELATIVA MENOR"),("g","círculo — nota da pentatônica"),
+       ("p","triângulo — graus 4 e 7, só na escala completa"),("j","janela TOM — a tonalidade"),
+       ("n","janelas de baixo — a casa e sua gêmea de oitava")]
     for k,(kd,tx) in enumerate(L): item(30, 42+k*15, kd, tx)
+    cw,ch,cx,cy=17.6,14.8,30,124
+    o.append(f'<polygon points="{cx},{cy} {cx+cw},{cy} {cx},{cy+ch}" fill="{OIT1}"/>')
+    o.append(f'<polygon points="{cx+cw},{cy} {cx+cw},{cy+ch} {cx},{cy+ch}" fill="{OIT2}"/>')
+    o.append(f'<line x1="{cx+cw}" y1="{cy}" x2="{cx}" y2="{cy+ch}" stroke="#fff" stroke-width=".9"/>')
+    o.append(f'<text x="{cx+0.29*cw}" y="{cy+0.29*ch}" font-size="6.0" fill="#fff">5</text>')
+    o.append(f'<text x="{cx+0.71*cw}" y="{cy+0.71*ch}" font-size="6.0" fill="#fff">17</text>')
+    o.append(f'<text x="{cx+cw+6}" y="{cy+ch/2-3}" font-size="5.2" fill="#222" style="text-anchor:start">'
+             f'a casa: em cima (azul) as casas 1 a 12, embaixo (laranja) as 13 a 24.</text>')
+    o.append(f'<text x="{cx+cw+6}" y="{cy+ch/2+4}" font-size="5.2" fill="#222" style="text-anchor:start">'
+             f'É a mesma forma nas duas — uma oitava de distância.</text>')
     txt=["Tabela do topo: cada caixa é uma forma. Número de CIMA = tom maior, de BAIXO = relativa menor.",
          "Os traços verticais caem nas casas que duas formas vizinhas dividem.",
          "Na 6ª corda os dois quadrados ficam a 12 casas: de um ao outro é uma oitava.",
