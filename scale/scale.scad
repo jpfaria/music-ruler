@@ -25,8 +25,26 @@ Z2 = BT+H1;                 // level 2 floor
 ZT = BT+H1+H2;              // top of the walls = 7.2
 
 ST = 1.8;  CHF = 1.0;       // plate thickness and 45-degree top chamfer
-KH = 96.4;                  // shutter, level 1 (half 48.2 > T1=47.7 -> cannot escape)
-SH = 95.2;                  // slider,  level 2 (half 47.6 > T2=47.1 -> cannot escape)
+
+// ---- fit -----------------------------------------------------------------
+// FIT is the side clearance between a plate and its channel, per side. Every
+// plate width is DERIVED from it, so the dovetail grip can never end up
+// smaller than the sideways play again -- which is what made the v3 plates
+// slide off their ledge and fall out.
+FIT = 0.15;                 // per side; raise it if a plate binds on your printer
+KH = 2*(C1-FIT);            // shutter, level 1 -> 97.7
+SH = 2*(C2-FIT);            // slider,  level 2 -> 96.5
+GRIP1 = KH/2-T1;            // dovetail grip per side, level 1 -> 1.15
+GRIP2 = SH/2-T2;            // level 2 -> 1.15
+// A plate can only rise until its shoulder meets the 45-degree wall: FIT mm.
+// It therefore never reaches the floor of the level above (ST+FIT < H).
+assert(GRIP1 >= 4*FIT, "level 1: dovetail grip too small for the side play");
+assert(GRIP2 >= 4*FIT, "level 2: dovetail grip too small for the side play");
+assert(ST+FIT <= H1, "shutter can lift into the slider channel");
+assert(ST+FIT <= H2, "slider can lift out over the walls");
+assert(ST-CHF == V1, "plate chamfer no longer matches the channel profile");
+echo(str("fit: play ",FIT," mm/side  grip ",GRIP1," mm/side  lift ",FIT,
+         " mm  gap to the level above ",H1-ST-FIT," mm"));
 
 TUNING=[4,9,2,7,11,4];
 DIAT=[0,2,4,5,7,9,11]; PENT=[0,2,4,7,9];
@@ -104,7 +122,18 @@ module shutter(){
   }
 }
 
+// 40 mm test coupon: the channel and both plate sections, ~10 min to print.
+// Slide each plate into the stub and you know the fit before printing the real
+// parts. The wider plate is the shutter (level 1), the narrower one the slider.
+CL = 40;
+module coupon(){
+  intersection(){ track(); translate([-CL/2,-BH/2,-1]) cube([CL,BH,ZT+2]); }
+  translate([CL+12,0,ST/2]) plate(-CL/2,CL/2,KH/2,ST,CHF);
+  translate([2*CL+24,0,ST/2]) plate(-CL/2,CL/2,SH/2,ST,CHF);
+}
+
 if(part=="track") track();
+else if(part=="coupon") coupon();
 else if(part=="slider") slider();
 else if(part=="shutter") shutter();
 else { track();

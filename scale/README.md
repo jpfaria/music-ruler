@@ -7,8 +7,14 @@ that crop it.
 | Part | Size | Weight | Quantity |
 |---|---|---|---|
 | `scale_1-TRACK.stl` | 280 × 108 × 7.2 mm | ~54 g | 1 |
-| `scale_2-SLIDER.stl` | 154 × 95 × 2.4 mm | ~12 g | 1 |
-| `scale_3-SHUTTER.stl` | 112 × 96 × 1.8 mm | ~8 g | **2** |
+| `scale_2-SLIDER.stl` | 154 × 96.5 × 2.4 mm | ~12 g | 1 |
+| `scale_3-SHUTTER.stl` | 112 × 97.7 × 1.8 mm | ~8 g | **2** |
+| `scale_0-FIT-COUPON.stl` | 144 × 108 × 7.2 mm | ~9 g | 1, first |
+
+**Print the fit coupon first.** `scale_0-FIT-COUPON.stl` is a 40 mm stub of the track
+plus a 40 mm section of each plate — ten minutes. Slide each plate into the stub: it has
+to run freely end to end and not lift out. Only then print the real parts. Too tight?
+Raise `FIT` in the `.scad` by 0.05 and print the coupon again.
 
 No supports on any part. 0.4 nozzle · 0.16 layer · 3 perimeters · 20 %. **PETG.**
 The track is 280 mm long — use a **5 mm brim**, bed at 80 °C and a closed chamber,
@@ -118,10 +124,14 @@ Because the fret spacing is **uniform** — this is not a model of a real neck. 
 spacing is logarithmic, this would not work.
 
 ## Tuning it (`.scad`)
-- Slider stuck in the channel → `SH` from 95.2 to 94.8 (level 2); shutter stuck → `KH` from 96.4 to 96.0
-- Slider or shutter too loose → increase `SH` / `KH` by 0.4 mm
-- Vertical rattle → `H1` / `H2` from 2.1 to 2.0 (less channel height)
-- Dovetail too weak → increase the difference `C1-T1` (1.3 mm of grip per side today)
+- Anything stuck or rattling → **`FIT`**, the side clearance per side (0.15 mm). Both plate
+  widths are derived from it, so the dovetail grip follows automatically: 1.15 mm per
+  side, almost 8× the play. In v3 they were hand-typed at 0.8 mm of play against 0.5 mm
+  of grip — a plate could slide off its own ledge, which is why everything fell apart.
+  `assert()`s at the top now refuse to build that geometry.
+- A plate can only rise by `FIT` before its shoulder wedges under the 45° wall, so the
+  shutter never reaches the slider above it: they always clear each other by 0.15 mm.
+- Dovetail deeper → increase the difference `C1-T1` (1.3 mm of ramp per side today)
 - Bigger/smaller piece → change `CW` and `RS` in the `.scad` **and** in `art_scale.py` (they have to match)
 - Thicker paper → `PAP` from 0.35 to your paper thickness
 - Another tuning → `TUNING` (pitch class, from the lowest string to the highest) in the `.scad` **and** in `art_scale.py`

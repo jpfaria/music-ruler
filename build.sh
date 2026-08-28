@@ -27,6 +27,7 @@ echo "== scale ruler: mechanics"
 $SCAD -o scale/stl/scale_1-TRACK.stl   -D 'part="track"'   scale/scale.scad
 $SCAD -o scale/stl/scale_2-SLIDER.stl  -D 'part="slider"'  scale/scale.scad
 $SCAD -o scale/stl/scale_3-SHUTTER.stl -D 'part="shutter"' scale/scale.scad
+$SCAD -o scale/stl/scale_0-FIT-COUPON.stl -D 'part="coupon"' scale/scale.scad
 
 echo "== scale ruler: art"
 for L in $LANGS; do

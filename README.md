@@ -43,8 +43,13 @@ A step-by-step guide to playing with it: [`docs/how-to-use.md`](docs/how-to-use.
 | `harmonic-field/stl/field_1-BASE-DISC.stl` | ⌀118 × 15.3 mm | ~40 g |
 | `harmonic-field/stl/field_2-TOP-DISC.stl` | ⌀110 (+tab 120) × 8 mm | ~20 g |
 | `scale/stl/scale_1-TRACK.stl` | 280 × 108 × 7.2 mm | ~54 g |
-| `scale/stl/scale_2-SLIDER.stl` | 154 × 95 × 2.4 mm | ~12 g |
-| `scale/stl/scale_3-SHUTTER.stl` (print **2**) | 112 × 96 × 1.8 mm | ~8 g each |
+| `scale/stl/scale_2-SLIDER.stl` | 154 × 96.5 × 2.4 mm | ~12 g |
+| `scale/stl/scale_3-SHUTTER.stl` (print **2**) | 112 × 97.7 × 1.8 mm | ~8 g each |
+| `scale/stl/scale_0-FIT-COUPON.stl` | 144 × 108 × 7.2 mm | ~9 g |
+
+**Print `scale_0-FIT-COUPON.stl` first.** It is a 40 mm stub of the channel plus a 40 mm
+section of each plate, ~10 minutes: slide them together and you know the fit before
+committing five hours to the track. Too tight? Raise `FIT` in `scale/scale.scad`.
 
 No supports on any part — retention is by a **45° dovetail**, with nothing bridged in
 mid-air. 0.4 nozzle · 0.16 layer · 3 perimeters · 20 %.
