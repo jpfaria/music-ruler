@@ -39,8 +39,10 @@ understanding which failure it prevents:
 - **The paper recess is never narrower than a plate that runs over it.** Otherwise the
   plate balances on two thin ledges, stays flat while the slider holds it down, and tips
   into the recess the moment it slides out from under it.
-- **A lifted plate must not reach the channel above it.** Level 1 is deliberately taller
-  than the shutter needs.
+- **A lifted plate must not reach the channel above it.** Every channel is deliberately
+  taller than its plate needs.
+- **A long tail hanging off a short body must keep the dovetail profile**, or it pitches
+  down into the channel below and jams. The blade's tails are rails, not strips.
 - Changing `CW`, `RS` or `TUNING` means changing them in the `.scad` **and** in
   `scale/art_scale.py`. They have no shared source.
 

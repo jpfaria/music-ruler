@@ -1,4 +1,4 @@
-# Scale ruler — track + slider + shutters
+# Scale ruler — track + cassette + blade + slider
 
 Same logic as the wheel: one fixed layer carrying all the information, moving layers
 that crop it.
@@ -6,19 +6,20 @@ that crop it.
 ## Printing
 | Part | Size | Weight | Quantity |
 |---|---|---|---|
-| `scale_1-TRACK.stl` | 280 × 108 × 8.2 mm | ~56 g | 1 |
-| `scale_2-SLIDER.stl` | 154 × 95.8 × 2.4 mm | ~12 g | 1 |
-| `scale_3-SHUTTER.stl` | 112 × 97.0 × 1.8 mm | ~8 g | **2** |
-| `scale_0-FIT-COUPON.stl` | 90 × 108 × 6.6 mm | ~5 g | 1, first |
+| `scale_1-TRACK.stl` | 280 × 108 × 10.8 mm | ~60 g | 1 |
+| `scale_2-SLIDER.stl` | 154 × 94.6 × 2.4 mm | ~25 g | 1 |
+| `scale_3-CASSETTE.stl` | 224 × 97.0 × 1.8 mm | ~32 g | 1 |
+| `scale_4-BLADE.stl` | 181 × 95.8 × 1.8 mm | ~4 g | 1 |
+| `scale_0-FIT-COUPON.stl` | 125 × 108 × 9.2 mm | ~10 g | 1, first |
 
 **Print the fit coupon first.** `scale_0-FIT-COUPON.stl` is a 20 mm stub of the track
-plus a section of each plate. Slide each plate into the stub: it has to run freely, not
-lift out, and sit flat on the recessed floor. Only then print the real parts. Too tight?
-Raise `FIT` in the `.scad` by 0.05 and print the coupon again.
+plus a section of each of the three plates. Slide each one into its own channel: it has to
+run freely, not lift out, and sit flat on the recessed floor. Only then print the real
+parts. Too tight? Raise `FIT` in the `.scad` by 0.05 and print the coupon again.
 
-The coupon carries only what the fit depends on — the dovetail walls, the recessed floor
-and the full width of each plate. The 3 mm of base under the channel is shaved to 1 mm
-and the plates are hollow between their edge rails, which takes it from 27 cm³ to 7.
+The coupon carries only what the fit depends on — the three dovetail profiles, the
+recessed floor and the full width of each plate. The 3 mm of base under the channel is
+shaved to 1 mm and the plate sections are hollow between their edge rails.
 
 No supports on any part. 0.4 nozzle · 0.16 layer · 3 perimeters · 20 %. **PETG.**
 The track is 280 mm long — use a **5 mm brim**, bed at 80 °C and a closed chamber,
@@ -30,10 +31,16 @@ Page 1 carries the two panels, page 2 the legend. Cut out one of the two rectang
 
 ### Assembly
 Glue the **shape label** into the recess on top of the slider before assembling (page 2
-of the PDF). The track has **two stacked channels**, each with a dovetail profile:
+of the PDF). The track has **three stacked channels**, each with its own dovetail profile
+and each stepped 0.6 mm narrower than the one below it:
 
-1. **bottom channel** — the two shutters go in, sliding from one of the ends
-2. **top channel** — the slider goes in the same way
+1. **bottom channel** — the cassette, sliding in from one of the ends
+2. **middle channel** — the blade, tails first
+3. **top channel** — the slider, the same way
+
+Three channels instead of two is not decoration. With the masks sharing one channel they
+could not cross each other, so each had to cover the worst case on its own and each one
+disappeared under the slider when it did. One channel per part removes both limits.
 
 Nothing comes out through the top: the channel closes at 45° and each plate is wider at
 its base than at the mouth. Nothing is bridged in mid-air — that is exactly what came
@@ -79,17 +86,34 @@ and not on 5. It is not another shape: 17 − 12 = 5.
 On the 6th string the **two squares** sit 12 frets apart: from one to the other is an
 octave — that is where the scale closes and starts over.
 
-### Seeing one shape only — the shutters
-The two shutters run in the bottom channel, **between the paper and the slider**. They
-cover the paper, so through the slider holes you see their blank face instead of the note.
+### Seeing one shape only — the cassette and the blade
+The cassette runs in the bottom channel, **between the paper and the slider**. It is two
+masks rigidly joined, with a **4-fret window** between them: where a mask covers the paper
+you see its blank face through the slider holes, and where the window is you see the
+notes. Slide it until the window lands on the box you want — one move, and the rest of
+the neck goes dark.
 
-Push one in from each side until they meet around the shape you want to study: only that
-box stays alive, the rest of the neck goes dark. To see everything again, push both back
-out to the ends.
+The five CAGED boxes are not all the same width. Because neighbouring shapes share their
+boundary fret, three of them are 3 frets wide and two are 4:
 
-Each shutter has a slot on top and another at the bottom, so the **shape table and the
-fret numbers stay visible** the whole time — and the slots are where you put your finger
-to push (there is no raised grip, it would hit the slider).
+| shape (major) | 1 | 2 | 3 | 4 | 5 |
+|---|---|---|---|---|---|
+| frets | 3 | 3 | **4** | 3 | **4** |
+
+So the window is cut to the widest, and for the 3-fret shapes the **blade** — one fret
+wide, in the middle channel — closes the leftover column. On the 4-fret shapes you park
+it out at the end of the track.
+
+The blade always ends up under the slider, where you cannot reach it, and there is no free
+band on the slider to run a pin through: the note holes, the KEY window, the fret windows
+and the dovetail rails use all of it. So the blade carries **two tails** instead, each one
+keeping the dovetail edge profile so it rides in the channel rather than hanging off the
+mask. They run under the solid bottom rail of the slider, invisible from above, and at
+least one of them always sticks out past the slider. **Pull a tail; do not push it.**
+
+Both masks are cut away above and below the note band, so the **shape table, the KEY
+window and the fret numbers stay readable** the whole time — and those openings are where
+you put your finger to move the cassette.
 
 None of this is engraved into the plastic: the full legend is on page 2 of the A4 sheet.
 
@@ -128,9 +152,9 @@ Because the fret spacing is **uniform** — this is not a model of a real neck. 
 spacing is logarithmic, this would not work.
 
 ## Tuning it (`.scad`)
-- Anything stuck or rattling → **`FIT`**, the side clearance per side (0.50 mm). Both
-  plate widths are derived from it, and the dovetail grip follows: 1.3 mm per side. Print
-  the coupon before trusting a new value.
+- Anything stuck or rattling → **`FIT`**, the side clearance per side (0.50 mm). All three
+  plate widths are derived from it (`PLATE(k) = CH(k) - FIT`), and the dovetail grip
+  follows: 1.3 mm per side on every level. Print the coupon before trusting a new value.
 - **Do not treat `FIT` as a CAD number.** A PETG plate leaves the bed wider than the model
   and the channel comes out narrower; 0.15 and 0.25 per side both printed too tight to
   slide. The bottom edge of every plate also carries a `BCHF` relief so the squished first
@@ -138,13 +162,13 @@ spacing is logarithmic, this would not work.
 - In v3 the widths were hand-typed: 0.8 mm of play against 0.5 mm of grip, so a plate
   could slide off its own ledge. `assert()` now refuses any geometry where a plate shoved
   fully to one side has less than 0.5 mm of engagement left on the other.
-- A plate can only rise by `FIT` before its shoulder wedges under the 45° wall, and level 1
-  is 0.2 mm taller than the shutter needs, so shutter and slider always clear each other
-  by 0.25 mm however the shutter is riding.
-- The paper recess spans the **whole** channel floor (`PAPW = 2*C1`) and ramps up at both
-  ends. A recess narrower than the shutter would leave two thin ledges for it to balance
+- A plate can only rise by `FIT` before its shoulder wedges under the 45° wall, and each
+  channel is 0.3 mm taller than the plate needs, so no plate ever touches the one running
+  above it.
+- The paper recess spans the **whole** channel floor (`PAPW = 2*C0`) and ramps up at both
+  ends. A recess narrower than the cassette would leave two thin ledges for it to balance
   on: under the slider it stays flat, and the moment it slides out from under it, it tips
-  and drops into the recess. An `assert()` refuses any geometry where the shutter is wider
+  and drops into the recess. An `assert()` refuses any geometry where the cassette is wider
   than the recess. Paper thickness no longer matters to the mechanism — thin paper just
   means every plate sits a fraction lower, still supported edge to edge.
 - Dovetail deeper → increase the difference `C1-T1` (1.3 mm of ramp per side today)

@@ -31,8 +31,12 @@ triangle = degrees 4 and 7.** The `KEY` window shows the tonality, and the littl
 along the bottom show the fret and its octave twin. The same piece serves all 12 keys —
 because the fret spacing is uniform, not logarithmic like a real neck.
 
-Two **shutters** run in a second channel, between the paper and the slider: push one in
-from each side and only the shape you are studying stays visible.
+Under the slider run two more parts, each in its own channel. The **cassette** is two
+masks rigidly joined with a 4-fret window between them: slide it until the window lands
+on the shape you want and everything else on the neck goes dark — one move, no bracketing.
+Three of the five CAGED boxes are 3 frets wide instead of 4, and for those the **blade**
+closes the one fret left over. The blade lives under the slider, so it is worked by two
+tails that always reach past it: you pull a tail, never push.
 
 A step-by-step guide to playing with it: [`docs/how-to-use.md`](docs/how-to-use.md).
 
@@ -42,16 +46,20 @@ A step-by-step guide to playing with it: [`docs/how-to-use.md`](docs/how-to-use.
 |---|---|---|
 | `harmonic-field/stl/field_1-BASE-DISC.stl` | ⌀118 × 15.3 mm | ~40 g |
 | `harmonic-field/stl/field_2-TOP-DISC.stl` | ⌀110 (+tab 120) × 8 mm | ~20 g |
-| `scale/stl/scale_1-TRACK.stl` | 280 × 108 × 8.2 mm | ~56 g |
-| `scale/stl/scale_2-SLIDER.stl` | 154 × 95.8 × 2.4 mm | ~12 g |
-| `scale/stl/scale_3-SHUTTER.stl` (print **2**) | 112 × 97.0 × 1.8 mm | ~8 g each |
-| `scale/stl/scale_0-FIT-COUPON.stl` | 90 × 108 × 6.6 mm | ~5 g |
+| `scale/stl/scale_1-TRACK.stl` | 280 × 108 × 10.8 mm | ~60 g |
+| `scale/stl/scale_2-SLIDER.stl` | 154 × 94.6 × 2.4 mm | ~25 g |
+| `scale/stl/scale_3-CASSETTE.stl` | 224 × 97.0 × 1.8 mm | ~32 g |
+| `scale/stl/scale_4-BLADE.stl` | 181 × 95.8 × 1.8 mm | ~4 g |
+| `scale/stl/scale_0-FIT-COUPON.stl` | 125 × 108 × 9.2 mm | ~10 g |
+
+Weights are the model volume, solid for the thin plates and at 20 % infill for the track;
+your slicer is the authority.
 
 **Print `scale_0-FIT-COUPON.stl` first.** It is a 20 mm stub of the channel plus a
-section of each plate: slide them together and you know the fit before committing five
-hours to the track. It is 7 cm³ against the track's 95 — the base under the channel is
-shaved to 1 mm and the plates are hollowed out, because neither carries any part of the
-fit. Too tight? Raise `FIT` in `scale/scale.scad`.
+section of each of the three plates: slide them together and you know the fit before
+committing five hours to the track. It is 10 cm³ against the track's 108 — the base under
+the channel is shaved to 1 mm and the plate sections are hollowed out, because neither
+carries any part of the fit. Too tight? Raise `FIT` in `scale/scale.scad`.
 
 No supports on any part — retention is by a **45° dovetail**, with nothing bridged in
 mid-air. 0.4 nozzle · 0.16 layer · 3 perimeters · 20 %.

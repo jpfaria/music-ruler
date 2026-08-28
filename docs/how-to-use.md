@@ -99,19 +99,29 @@ That is exactly why the pentatonic exists: take those two out and any note sound
 over any chord in the field. Start with the big holes and add the small ones when your
 ear asks for them.
 
-## Studying one shape at a time — the shutters
+## Studying one shape at a time — the cassette
 
-The two shutters run in a channel **below** the slider, between it and the paper. Since
-they cover the paper, the slider holes start showing their blank face instead of the note.
+The cassette runs in a channel **below** the slider, between it and the paper. It is two
+masks joined together with a **4-fret window** between them. Where a mask sits, the slider
+holes show its blank face instead of the note; where the window sits, you see the notes.
 
-Push one in from each side until they meet around the box you want: the rest of the neck
-goes dark and only that shape is left. It is the most honest way to study a position —
-you cannot "escape" into the neighboring box without noticing.
+Slide it until the window lands on the box you want: the rest of the neck goes dark and
+only that shape is left. One move. It is the most honest way to study a position — you
+cannot "escape" into the neighbouring box without noticing.
 
-The shape table and the fret numbers stay visible the whole time, through the top and
-bottom slots of the shutters. Those same slots are where you put your finger to push.
+Shapes 3 and 5 are 4 frets wide and fill the window exactly. Shapes 1, 2 and 4 are 3 frets
+wide, and for those you bring in the **blade**: one fret wide, running in its own channel,
+it closes the column left over. On the wide shapes you park it out at the end of the track.
 
-To get the whole neck back, push both out to the ends.
+The blade ends up under the slider, so you work it by its **tails** — the thin rails that
+stick out past the slider at the near edge. **Pull the tail on the side you want the blade
+to move towards; never push.** One of the two is always reachable.
+
+The shape table, the KEY window and the fret numbers stay visible the whole time, through
+the openings above and below the mask band. Those same openings are where you put your
+finger to move the cassette.
+
+To get the whole neck back, slide the cassette out to either end.
 
 ## Together with the harmonic field wheel
 
