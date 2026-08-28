@@ -45,11 +45,13 @@ A step-by-step guide to playing with it: [`docs/how-to-use.md`](docs/how-to-use.
 | `scale/stl/scale_1-TRACK.stl` | 280 × 108 × 7.4 mm | ~54 g |
 | `scale/stl/scale_2-SLIDER.stl` | 154 × 96.3 × 2.4 mm | ~12 g |
 | `scale/stl/scale_3-SHUTTER.stl` (print **2**) | 112 × 97.5 × 1.8 mm | ~8 g each |
-| `scale/stl/scale_0-FIT-COUPON.stl` | 144 × 108 × 7.4 mm | ~9 g |
+| `scale/stl/scale_0-FIT-COUPON.stl` | 90 × 108 × 5.8 mm | ~5 g |
 
-**Print `scale_0-FIT-COUPON.stl` first.** It is a 40 mm stub of the channel plus a 40 mm
-section of each plate, ~10 minutes: slide them together and you know the fit before
-committing five hours to the track. Too tight? Raise `FIT` in `scale/scale.scad`.
+**Print `scale_0-FIT-COUPON.stl` first.** It is a 20 mm stub of the channel plus a
+section of each plate: slide them together and you know the fit before committing five
+hours to the track. It is 7 cm³ against the track's 95 — the base under the channel is
+shaved to 1 mm and the plates are hollowed out, because neither carries any part of the
+fit. Too tight? Raise `FIT` in `scale/scale.scad`.
 
 No supports on any part — retention is by a **45° dovetail**, with nothing bridged in
 mid-air. 0.4 nozzle · 0.16 layer · 3 perimeters · 20 %.

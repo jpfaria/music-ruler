@@ -9,12 +9,16 @@ that crop it.
 | `scale_1-TRACK.stl` | 280 × 108 × 7.4 mm | ~54 g | 1 |
 | `scale_2-SLIDER.stl` | 154 × 96.3 × 2.4 mm | ~12 g | 1 |
 | `scale_3-SHUTTER.stl` | 112 × 97.5 × 1.8 mm | ~8 g | **2** |
-| `scale_0-FIT-COUPON.stl` | 144 × 108 × 7.4 mm | ~9 g | 1, first |
+| `scale_0-FIT-COUPON.stl` | 90 × 108 × 5.8 mm | ~5 g | 1, first |
 
-**Print the fit coupon first.** `scale_0-FIT-COUPON.stl` is a 40 mm stub of the track
-plus a 40 mm section of each plate — ten minutes. Slide each plate into the stub: it has
-to run freely end to end and not lift out. Only then print the real parts. Too tight?
+**Print the fit coupon first.** `scale_0-FIT-COUPON.stl` is a 20 mm stub of the track
+plus a section of each plate. Slide each plate into the stub: it has to run freely, not
+lift out, and sit flat on the recessed floor. Only then print the real parts. Too tight?
 Raise `FIT` in the `.scad` by 0.05 and print the coupon again.
+
+The coupon carries only what the fit depends on — the dovetail walls, the recessed floor
+and the full width of each plate. The 3 mm of base under the channel is shaved to 1 mm
+and the plates are hollow between their edge rails, which takes it from 27 cm³ to 7.
 
 No supports on any part. 0.4 nozzle · 0.16 layer · 3 perimeters · 20 %. **PETG.**
 The track is 280 mm long — use a **5 mm brim**, bed at 80 °C and a closed chamber,

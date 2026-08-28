@@ -138,14 +138,33 @@ module shutter(){
   }
 }
 
-// 40 mm test coupon: the channel and both plate sections, ~10 min to print.
-// Slide each plate into the stub and you know the fit before printing the real
-// parts. The wider plate is the shutter (level 1), the narrower one the slider.
-CL = 40;
+// Test coupon: a short slice of the channel plus a section of each plate. Slide
+// them together and you know the fit before committing hours to the real track.
+// The wider plate is the shutter (level 1), the narrower one the slider.
+// The floor under the recess is shaved down to CFLOOR: the 3 mm of base in the
+// real track is most of its mass and none of the fit, so printing it here only
+// costs time.
+CL = 20;                    // coupon length
+CFLOOR = 1.0;               // material left under the paper recess
+CTRIM = BT-PAP-CFLOOR;      // how much of the base is cut away
+CRAIL = 14;                 // edge rail kept on a coupon plate
+CRIB  = 8;                  // central rib kept on a coupon plate
+// A coupon plate keeps its two edges (where the dovetail works) and a central
+// rib, and is hollow in between -- the real plates are full of slots anyway.
+module coupon_plate(half){
+  difference(){
+    plate(-CL/2,CL/2,half,ST,CHF);
+    for(sy=[-1,1]) translate([0, sy*(CRIB/2+(half-CRAIL-CRIB/2)/2), 0])
+      cube([CL-6, half-CRAIL-CRIB/2, ST+2], center=true);
+  }
+}
 module coupon(){
-  intersection(){ track(); translate([-CL/2,-BH/2,-1]) cube([CL,BH,ZT+2]); }
-  translate([CL+12,0,ST/2]) plate(-CL/2,CL/2,KH/2,ST,CHF);
-  translate([2*CL+24,0,ST/2]) plate(-CL/2,CL/2,SH/2,ST,CHF);
+  translate([0,0,-CTRIM]) difference(){
+    intersection(){ track(); translate([-CL/2,-BH/2,-1]) cube([CL,BH,ZT+2]); }
+    translate([-BW,-BH,-1]) cube([2*BW,2*BH,CTRIM+1]);
+  }
+  translate([CL+15,0,ST/2])   coupon_plate(KH/2);
+  translate([2*CL+30,0,ST/2]) coupon_plate(SH/2);
 }
 
 if(part=="track") track();
