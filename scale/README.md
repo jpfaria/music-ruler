@@ -6,10 +6,10 @@ that crop it.
 ## Printing
 | Part | Size | Weight | Quantity |
 |---|---|---|---|
-| `scale_1-TRACK.stl` | 280 × 108 × 7.2 mm | ~54 g | 1 |
-| `scale_2-SLIDER.stl` | 154 × 96.5 × 2.4 mm | ~12 g | 1 |
-| `scale_3-SHUTTER.stl` | 112 × 97.7 × 1.8 mm | ~8 g | **2** |
-| `scale_0-FIT-COUPON.stl` | 144 × 108 × 7.2 mm | ~9 g | 1, first |
+| `scale_1-TRACK.stl` | 280 × 108 × 7.4 mm | ~54 g | 1 |
+| `scale_2-SLIDER.stl` | 154 × 96.3 × 2.4 mm | ~12 g | 1 |
+| `scale_3-SHUTTER.stl` | 112 × 97.5 × 1.8 mm | ~8 g | **2** |
+| `scale_0-FIT-COUPON.stl` | 144 × 108 × 7.4 mm | ~9 g | 1, first |
 
 **Print the fit coupon first.** `scale_0-FIT-COUPON.stl` is a 40 mm stub of the track
 plus a 40 mm section of each plate — ten minutes. Slide each plate into the stub: it has
@@ -129,8 +129,15 @@ spacing is logarithmic, this would not work.
   side, almost 8× the play. In v3 they were hand-typed at 0.8 mm of play against 0.5 mm
   of grip — a plate could slide off its own ledge, which is why everything fell apart.
   `assert()`s at the top now refuse to build that geometry.
-- A plate can only rise by `FIT` before its shoulder wedges under the 45° wall, so the
-  shutter never reaches the slider above it: they always clear each other by 0.15 mm.
+- A plate can only rise by `FIT` before its shoulder wedges under the 45° wall, and level 1
+  is 0.2 mm taller than the shutter needs, so shutter and slider always clear each other
+  by 0.25 mm however the shutter is riding.
+- The paper recess spans the **whole** channel floor (`PAPW = 2*C1`) and ramps up at both
+  ends. A recess narrower than the shutter would leave two thin ledges for it to balance
+  on: under the slider it stays flat, and the moment it slides out from under it, it tips
+  and drops into the recess. An `assert()` refuses any geometry where the shutter is wider
+  than the recess. Paper thickness no longer matters to the mechanism — thin paper just
+  means every plate sits a fraction lower, still supported edge to edge.
 - Dovetail deeper → increase the difference `C1-T1` (1.3 mm of ramp per side today)
 - Bigger/smaller piece → change `CW` and `RS` in the `.scad` **and** in `art_scale.py` (they have to match)
 - Thicker paper → `PAP` from 0.35 to your paper thickness

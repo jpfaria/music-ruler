@@ -16,8 +16,10 @@ BW = 280; BH = 108; BT = 3.0;
 PAP = 0.35;                 // paper recess
 
 // ---- profile of the two channels (dovetail) ------------------------------
-C1 = 49.0;  V1 = 0.8;  H1 = 2.1;   // level 1: half-width, straight run, height
+C1 = 49.0;  V1 = 0.8;  H1 = 2.3;   // level 1: half-width, straight run, height
 C2 = 48.4;  V2 = 0.8;  H2 = 2.1;   // level 2
+// level 1 is 0.2 taller than the plate needs: that headroom is what keeps a
+// lifted shutter from ever touching the slider running above it.
 T1 = C1-(H1-V1);            // level 1 opening = 47.7
 T2 = C2-(H2-V2);            // level 2 opening = 47.1
 Z1 = BT;                    // level 1 floor
@@ -31,7 +33,12 @@ ST = 1.8;  CHF = 1.0;       // plate thickness and 45-degree top chamfer
 // plate width is DERIVED from it, so the dovetail grip can never end up
 // smaller than the sideways play again -- which is what made the v3 plates
 // slide off their ledge and fall out.
-FIT = 0.15;                 // per side; raise it if a plate binds on your printer
+FIT = 0.25;                 // per side; raise it if a plate binds on your printer
+PAPW = 2*C1;                // the paper recess spans the WHOLE channel floor, so a
+                            // shutter is supported edge to edge whatever the paper
+                            // thickness -- a narrower recess leaves two thin ledges
+                            // for it to balance on and tip off of
+PAPR = 2.0;                 // ramp at each end of the recess, so nothing catches
 KH = 2*(C1-FIT);            // shutter, level 1 -> 97.7
 SH = 2*(C2-FIT);            // slider,  level 2 -> 96.5
 GRIP1 = KH/2-T1;            // dovetail grip per side, level 1 -> 1.15
@@ -43,6 +50,7 @@ assert(GRIP2 >= 4*FIT, "level 2: dovetail grip too small for the side play");
 assert(ST+FIT <= H1, "shutter can lift into the slider channel");
 assert(ST+FIT <= H2, "slider can lift out over the walls");
 assert(ST-CHF == V1, "plate chamfer no longer matches the channel profile");
+assert(PAPW >= KH, "shutter wider than the paper recess: it would ride on the ledges");
 echo(str("fit: play ",FIT," mm/side  grip ",GRIP1," mm/side  lift ",FIT,
          " mm  gap to the level above ",H1-ST-FIT," mm"));
 
@@ -79,8 +87,16 @@ module track(){
     translate([-BW/2,-BH/2,0]) cube([BW,BH,ZT]);
     channel(Z1,C1,V1,H1,T1);
     channel(Z2,C2,V2,H2,T2);
-    translate([-(BW-8)/2,-C1+0.5,BT-PAP]) cube([BW-8, 2*C1-1, PAP+0.01]);   // paper
+    paper();
   }
+}
+
+// Paper recess: full channel width, ramped at both ends so a plate slides out of
+// it onto the bare floor without catching on a 0.35 mm step.
+module paper(){
+  translate([0,PAPW/2,BT]) rotate([90,0,0]) linear_extrude(PAPW)
+    polygon([[-(BW-8)/2-PAPR, 0.01], [-(BW-8)/2, -PAP], [(BW-8)/2, -PAP],
+             [(BW-8)/2+PAPR, 0.01]]);
 }
 
 module slider(){
