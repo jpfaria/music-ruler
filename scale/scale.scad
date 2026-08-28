@@ -16,10 +16,11 @@ BW = 280; BH = 108; BT = 3.0;
 PAP = 0.35;                 // paper recess
 
 // ---- profile of the two channels (dovetail) ------------------------------
-C1 = 49.0;  V1 = 0.8;  H1 = 2.3;   // level 1: half-width, straight run, height
-C2 = 48.4;  V2 = 0.8;  H2 = 2.1;   // level 2
-// level 1 is 0.2 taller than the plate needs: that headroom is what keeps a
-// lifted shutter from ever touching the slider running above it.
+C1 = 49.0;  V1 = 0.8;  H1 = 2.6;   // level 1: half-width, straight run, height
+C2 = 48.4;  V2 = 0.8;  H2 = 2.6;   // level 2
+// The channels are deliberately deep: the 45-degree ramp is H-V = 1.8 mm long,
+// which is what buys room for a loose sliding fit and still leaves more than a
+// millimetre of dovetail holding each plate down.
 T1 = C1-(H1-V1);            // level 1 opening = 47.7
 T2 = C2-(H2-V2);            // level 2 opening = 47.1
 Z1 = BT;                    // level 1 floor
@@ -27,13 +28,21 @@ Z2 = BT+H1;                 // level 2 floor
 ZT = BT+H1+H2;              // top of the walls = 7.2
 
 ST = 1.8;  CHF = 1.0;       // plate thickness and 45-degree top chamfer
+BCHF = 0.4;                 // relief on the bottom edge: the squished first layer
+                            // (elephant's foot) has to go somewhere other than
+                            // into the channel wall
 
 // ---- fit -----------------------------------------------------------------
 // FIT is the side clearance between a plate and its channel, per side. Every
 // plate width is DERIVED from it, so the dovetail grip can never end up
 // smaller than the sideways play again -- which is what made the v3 plates
 // slide off their ledge and fall out.
-FIT = 0.25;                 // per side; raise it if a plate binds on your printer
+// A PETG plate comes off the bed wider than the model by roughly 0.1-0.2 mm per
+// side, and the channel comes out narrower by about as much. 0.15 and 0.25 both
+// printed tight to the point of binding, so the nominal clearance is generous:
+// 0.5 per side, 1.0 mm of slack across the width, and the dovetail still grips
+// 1.3 mm per side.
+FIT = 0.50;                 // per side; drop to 0.4 if your printer runs small
 PAPW = 2*C1;                // the paper recess spans the WHOLE channel floor, so a
                             // shutter is supported edge to edge whatever the paper
                             // thickness -- a narrower recess leaves two thin ledges
@@ -45,8 +54,10 @@ GRIP1 = KH/2-T1;            // dovetail grip per side, level 1 -> 1.15
 GRIP2 = SH/2-T2;            // level 2 -> 1.15
 // A plate can only rise until its shoulder meets the 45-degree wall: FIT mm.
 // It therefore never reaches the floor of the level above (ST+FIT < H).
-assert(GRIP1 >= 4*FIT, "level 1: dovetail grip too small for the side play");
-assert(GRIP2 >= 4*FIT, "level 2: dovetail grip too small for the side play");
+// The real invariant: shove a plate as far to one side as the play allows and the
+// far side must STILL be well engaged. That leftover is GRIP-FIT.
+assert(GRIP1-FIT >= 0.5, "level 1: plate can slide off its own ledge");
+assert(GRIP2-FIT >= 0.5, "level 2: plate can slide off its own ledge");
 assert(ST+FIT <= H1, "shutter can lift into the slider channel");
 assert(ST+FIT <= H2, "slider can lift out over the walls");
 assert(ST-CHF == V1, "plate chamfer no longer matches the channel profile");
@@ -68,11 +79,13 @@ function has(v,g) = len([for(a=v) if(a==g) 1])>0;
 function xc(f) = -((NF-1)/2)*CW + f*CW;
 function yc(i) = -((6-1)/2)*RS + i*RS;
 
-// plate with a 45-degree chamfer on both long top edges
+// Plate: 45-degree chamfer on both long top edges (that is the dovetail face) and
+// a small relief on the bottom edges for the first-layer squish.
 module plate(x0,x1,half,th,chf){
   hull(){
-    translate([(x0+x1)/2,0,th/2-0.005]) cube([x1-x0, 2*(half-chf), 0.01], center=true);
-    translate([(x0+x1)/2,0,-th/2+0.005]) cube([x1-x0, 2*half, 0.01], center=true);
+    translate([(x0+x1)/2,0,th/2-0.005])      cube([x1-x0, 2*(half-chf), 0.01], center=true);
+    translate([(x0+x1)/2,0,-th/2+BCHF])      cube([x1-x0, 2*half, 0.01], center=true);
+    translate([(x0+x1)/2,0,-th/2+0.005])     cube([x1-x0, 2*(half-BCHF), 0.01], center=true);
   }
 }
 // channel cutter: Y-Z profile extruded along X

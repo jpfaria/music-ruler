@@ -6,10 +6,10 @@ that crop it.
 ## Printing
 | Part | Size | Weight | Quantity |
 |---|---|---|---|
-| `scale_1-TRACK.stl` | 280 × 108 × 7.4 mm | ~54 g | 1 |
-| `scale_2-SLIDER.stl` | 154 × 96.3 × 2.4 mm | ~12 g | 1 |
-| `scale_3-SHUTTER.stl` | 112 × 97.5 × 1.8 mm | ~8 g | **2** |
-| `scale_0-FIT-COUPON.stl` | 90 × 108 × 5.8 mm | ~5 g | 1, first |
+| `scale_1-TRACK.stl` | 280 × 108 × 8.2 mm | ~56 g | 1 |
+| `scale_2-SLIDER.stl` | 154 × 95.8 × 2.4 mm | ~12 g | 1 |
+| `scale_3-SHUTTER.stl` | 112 × 97.0 × 1.8 mm | ~8 g | **2** |
+| `scale_0-FIT-COUPON.stl` | 90 × 108 × 6.6 mm | ~5 g | 1, first |
 
 **Print the fit coupon first.** `scale_0-FIT-COUPON.stl` is a 20 mm stub of the track
 plus a section of each plate. Slide each plate into the stub: it has to run freely, not
@@ -128,11 +128,16 @@ Because the fret spacing is **uniform** — this is not a model of a real neck. 
 spacing is logarithmic, this would not work.
 
 ## Tuning it (`.scad`)
-- Anything stuck or rattling → **`FIT`**, the side clearance per side (0.15 mm). Both plate
-  widths are derived from it, so the dovetail grip follows automatically: 1.15 mm per
-  side, almost 8× the play. In v3 they were hand-typed at 0.8 mm of play against 0.5 mm
-  of grip — a plate could slide off its own ledge, which is why everything fell apart.
-  `assert()`s at the top now refuse to build that geometry.
+- Anything stuck or rattling → **`FIT`**, the side clearance per side (0.50 mm). Both
+  plate widths are derived from it, and the dovetail grip follows: 1.3 mm per side. Print
+  the coupon before trusting a new value.
+- **Do not treat `FIT` as a CAD number.** A PETG plate leaves the bed wider than the model
+  and the channel comes out narrower; 0.15 and 0.25 per side both printed too tight to
+  slide. The bottom edge of every plate also carries a `BCHF` relief so the squished first
+  layer has somewhere to go other than into the channel wall.
+- In v3 the widths were hand-typed: 0.8 mm of play against 0.5 mm of grip, so a plate
+  could slide off its own ledge. `assert()` now refuses any geometry where a plate shoved
+  fully to one side has less than 0.5 mm of engagement left on the other.
 - A plate can only rise by `FIT` before its shoulder wedges under the 45° wall, and level 1
   is 0.2 mm taller than the shutter needs, so shutter and slider always clear each other
   by 0.25 mm however the shutter is riding.

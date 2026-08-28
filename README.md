@@ -42,10 +42,10 @@ A step-by-step guide to playing with it: [`docs/how-to-use.md`](docs/how-to-use.
 |---|---|---|
 | `harmonic-field/stl/field_1-BASE-DISC.stl` | ⌀118 × 15.3 mm | ~40 g |
 | `harmonic-field/stl/field_2-TOP-DISC.stl` | ⌀110 (+tab 120) × 8 mm | ~20 g |
-| `scale/stl/scale_1-TRACK.stl` | 280 × 108 × 7.4 mm | ~54 g |
-| `scale/stl/scale_2-SLIDER.stl` | 154 × 96.3 × 2.4 mm | ~12 g |
-| `scale/stl/scale_3-SHUTTER.stl` (print **2**) | 112 × 97.5 × 1.8 mm | ~8 g each |
-| `scale/stl/scale_0-FIT-COUPON.stl` | 90 × 108 × 5.8 mm | ~5 g |
+| `scale/stl/scale_1-TRACK.stl` | 280 × 108 × 8.2 mm | ~56 g |
+| `scale/stl/scale_2-SLIDER.stl` | 154 × 95.8 × 2.4 mm | ~12 g |
+| `scale/stl/scale_3-SHUTTER.stl` (print **2**) | 112 × 97.0 × 1.8 mm | ~8 g each |
+| `scale/stl/scale_0-FIT-COUPON.stl` | 90 × 108 × 6.6 mm | ~5 g |
 
 **Print `scale_0-FIT-COUPON.stl` first.** It is a 20 mm stub of the channel plus a
 section of each plate: slide them together and you know the fit before committing five
