@@ -1,6 +1,6 @@
-# saidas intermediarias dos geradores
+# intermediate output of the art generators
 *.svg
 !docs/*.svg
-arte_roda.svg
 __pycache__/
 .DS_Store
+.dev-rules/

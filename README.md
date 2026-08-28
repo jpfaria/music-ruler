@@ -1,72 +1,88 @@
 # music-ruler
 
-Duas ferramentas de teoria musical para violão/guitarra, feitas para imprimir em 3D.
+Two music-theory tools for guitar, made to be 3D printed.
 
-Mesma receita nas duas: **plástico liso impresso em 3D + arte colorida em papel** colada
-nos rebaixos. Toda a cor e todo o texto vêm do papel — mudar o conteúdo não exige
-reimprimir nada em 3D.
+Same recipe in both: **plain 3D-printed plastic + colored paper art** glued into the
+recesses. All the color and all the text come from the paper — changing the content
+never means reprinting anything in 3D.
+
+The printed art is generated in **English, Portuguese and Spanish**; pick the PDF in
+the language you want.
 
 | | |
 |---|---|
-| ![roda](docs/previa-roda.png) | ![régua](docs/previa-regua.png) |
+| ![harmonic field](docs/preview-field.png) | ![scale ruler](docs/preview-scale.png) |
 
-## [`roda/`](roda) — Roda de campo harmônico
-Volvelle. Gire até a tônica aparecer na janela do meio e o campo harmônico inteiro
-aparece de uma vez: 3 acordes maiores, 3 menores e o diminuto.
+## [`harmonic-field/`](harmonic-field) — Harmonic field wheel
+A volvelle. Turn it until the tonic shows up in the middle window and the whole harmonic
+field appears at once: 3 major chords, 3 minor ones and the diminished.
 
-Cada janela traz duas pastilhas — **branca = grau no tom maior, preta = grau no tom
-menor relativo**. A cor da célula diz a função: verde repouso, laranja transição,
-vermelho tensão. O disco de cima ainda traz as tabelas de intervalos
-(`T T S T T T S` / `T S T T S T T`) e a qualidade de cada grau.
+Each window carries two chips — **white = degree in the major key, black = degree in the
+relative minor key**. The cell color tells you the function: green rest, orange
+transition, red tension. The top disc also carries the interval tables
+(`T T S T T T S` / `T S T T S T T`) and the quality of every degree.
 
-## [`regua/`](regua) — Régua de escalas
-Trilho com o mapa de notas de 24 casas + régua deslizante furada nas notas da escala.
-Deslize até a tônica cair no furo e as 5 formas (CAGED) se posicionam sozinhas.
+## [`scale/`](scale) — Scale ruler
+A track with the 24-fret note map + a sliding ruler drilled at the notes of the scale.
+Slide until the tonic lands in a hole and the 5 CAGED shapes place themselves.
 
-**Quadrado = tônica maior · losango = tônica da relativa menor · círculo = pentatônica ·
-triângulo = graus 4 e 7.** A janela `TOM` mostra a tonalidade, e as janelinhas de baixo
-mostram a casa e a gêmea de oitava. A mesma peça serve os 12 tons — porque o espaçamento
-das casas é uniforme, e não logarítmico como num braço de verdade.
+**Square = major tonic · diamond = relative minor tonic · circle = pentatonic ·
+triangle = degrees 4 and 7.** The `KEY` window shows the tonality, and the little windows
+along the bottom show the fret and its octave twin. The same piece serves all 12 keys —
+because the fret spacing is uniform, not logarithmic like a real neck.
 
-Duas **cortinas** correm num segundo canal, entre o papel e a régua: empurre uma de cada
-lado e só a forma que você está estudando fica visível.
+Two **shutters** run in a second channel, between the paper and the slider: push one in
+from each side and only the shape you are studying stays visible.
 
-## Imprimir
+A step-by-step guide to playing with it: [`docs/how-to-use.md`](docs/how-to-use.md).
 
-| Peça | Tamanho | Peso |
+## Printing
+
+| Part | Size | Weight |
 |---|---|---|
-| `roda/stl/roda_1-DISCO-BASE.stl` | ⌀118 × 15,3 mm | ~40 g |
-| `roda/stl/roda_2-DISCO-GIRATORIO.stl` | ⌀110 (+aba 120) × 8 mm | ~20 g |
-| `regua/stl/regua_1-TRILHO.stl` | 280 × 108 × 7,2 mm | ~54 g |
-| `regua/stl/regua_2-REGUA-DESLIZANTE.stl` | 154 × 95 × 2,4 mm | ~12 g |
-| `regua/stl/regua_3-CORTINA.stl` (imprimir **2**) | 112 × 96 × 1,8 mm | ~8 g cada |
+| `harmonic-field/stl/field_1-BASE-DISC.stl` | ⌀118 × 15.3 mm | ~40 g |
+| `harmonic-field/stl/field_2-TOP-DISC.stl` | ⌀110 (+tab 120) × 8 mm | ~20 g |
+| `scale/stl/scale_1-TRACK.stl` | 280 × 108 × 7.2 mm | ~54 g |
+| `scale/stl/scale_2-SLIDER.stl` | 154 × 95 × 2.4 mm | ~12 g |
+| `scale/stl/scale_3-SHUTTER.stl` (print **2**) | 112 × 96 × 1.8 mm | ~8 g each |
 
-Sem suporte em nenhuma peça — a retenção é por **rabo de andorinha a 45°**, sem aba
-pendurada. Bico 0,4 · camada 0,16 · 3 perímetros · 20 %.
-**PETG** de preferência. O trilho tem 280 mm de comprimento — brim de 5 mm, mesa a 80 °C
-e câmara fechada, senão as pontas levantam.
+No supports on any part — retention is by a **45° dovetail**, with nothing bridged in
+mid-air. 0.4 nozzle · 0.16 layer · 3 perimeters · 20 %.
+**PETG** preferably. The track is 280 mm long — use a 5 mm brim, bed at 80 °C and a
+closed chamber, otherwise the ends lift.
 
-### Antes de recortar o papel: confira a escala
-Todo PDF imprime em **A4, 100 % / tamanho real**, com "ajustar à página" DESMARCADO.
-A folha da roda traz uma **barra de 100 mm** no rodapé: meça com uma régua. Se não der
-100 mm exatos, reimprima com escala `100 × 100 ÷ (o que deu)`. Papel fora de escala é o
-que faz os acordes da borda não caírem dentro da janela.
+### Before cutting the paper: check the scale
+Every PDF prints on **A4, 100 % / actual size**, with "fit to page" UNCHECKED.
+The wheel sheet carries a **100 mm bar** in the footer: measure it with a ruler. If it
+is not exactly 100 mm, print again at scale `100 × 100 ÷ (what you measured)`. Paper out
+of scale is what makes the chords near the rim miss their window.
 
-São três colagens: o mapa de notas no trilho, a etiqueta das formas no topo da régua e a arte da roda nos dois discos. Rebaixos de 0,35 mm: papel comum ou cartão fino. Cola em bastão ou spray — cola branca
-empena o papel.
+Three glue-ups: the note map onto the track, the shape label onto the top of the slider,
+and the wheel art onto both discs. The recesses are 0.35 mm deep: plain paper or thin
+card. Glue stick or spray — white glue warps the paper.
 
-## Regerar tudo
+## Regenerating everything
 
 ```sh
 ./build.sh
 ```
 
-Precisa de `openscad`, `python3`, `cairosvg` e `pypdf`.
+Needs `openscad`, `python3`, `cairosvg` and `pypdf`.
 
-Os geradores de arte (`arte.py`, `arte_regua.py`) **se verificam sozinhos**: abortam sem
-gravar o arquivo se algum texto invadir linha de corte, transbordar a célula, encostar no
-furo central ou se dois blocos se sobrepuserem. Foi assim que apareceram vários erros que
-teriam ido para a impressora.
+The art generators (`art_field.py`, `art_scale.py`) **check themselves**: they abort
+without writing the file if any text crosses a cut line, overflows its cell, touches the
+center hole, runs off the page, or if two blocks overlap. That is how several mistakes
+that would have gone to the printer were caught.
 
-Cada `.scad` tem os parâmetros de ajuste comentados no topo — folga do encaixe, espessura
-do papel, afinação das cordas.
+Both take two environment variables:
+
+| Variable | Values | Meaning |
+|---|---|---|
+| `ART_LANG` | `en` `pt` `es` | language of every printed label (default `en`) |
+| `COLOR` | `1` `0` | `0` renders the black-and-white version |
+
+`ART_LANG` is deliberately not called `LANG` — that name already belongs to the shell
+locale. `build.sh` loops over all three languages; `LANGS="en" ./build.sh` builds just one.
+
+Each `.scad` has its tuning parameters commented at the top — fit clearance, paper
+thickness, string tuning.

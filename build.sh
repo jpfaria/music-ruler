@@ -1,38 +1,46 @@
 #!/usr/bin/env bash
-# Regera STLs e PDFs a partir das fontes.
-# Precisa de: openscad, python3 (colorsys/math), cairosvg, pypdf
+# Regenerates the STLs and the PDFs from source.
+# Needs: openscad, python3 (colorsys/math), cairosvg, pypdf
 set -euo pipefail
 cd "$(dirname "$0")"
 SCAD=${SCAD:-openscad}
+LANGS=${LANGS:-"en pt es"}          # printed art is generated in every language
+mkdir -p scale/stl scale/pdf harmonic-field/stl harmonic-field/pdf
 
-echo "== roda: mecanica"
-$SCAD -o roda/stl/roda_1-DISCO-BASE.stl      -D 'part="base"' roda/roda.scad
-$SCAD -o roda/stl/roda_2-DISCO-GIRATORIO.stl -D 'part="top"'  roda/roda.scad
+echo "== harmonic field: mechanics"
+$SCAD -o harmonic-field/stl/field_1-BASE-DISC.stl -D 'part="base"' harmonic-field/harmonic_field.scad
+$SCAD -o harmonic-field/stl/field_2-TOP-DISC.stl  -D 'part="top"'  harmonic-field/harmonic_field.scad
 
-echo "== roda: arte"
-( cd roda && COR=1 python3 arte.py && mv arte_roda.svg /tmp/roda_cor.svg \
-           && COR=0 python3 arte.py && mv arte_roda.svg /tmp/roda_pb.svg )
-python3 - <<'PY'
-import cairosvg
-cairosvg.svg2pdf(url="/tmp/roda_cor.svg", write_to="roda/pdf/arte-colorida.pdf")
-cairosvg.svg2pdf(url="/tmp/roda_pb.svg",  write_to="roda/pdf/arte-preto-e-branco.pdf")
+echo "== harmonic field: art"
+for L in $LANGS; do
+  ( cd harmonic-field && COLOR=1 ART_LANG=$L python3 art_field.py && mv art_field.svg /tmp/field_color.svg \
+                      && COLOR=0 ART_LANG=$L python3 art_field.py && mv art_field.svg /tmp/field_bw.svg )
+  python3 - "$L" <<'PY'
+import sys, cairosvg
+L=sys.argv[1]
+cairosvg.svg2pdf(url="/tmp/field_color.svg", write_to=f"harmonic-field/pdf/art-color-{L}.pdf")
+cairosvg.svg2pdf(url="/tmp/field_bw.svg",    write_to=f"harmonic-field/pdf/art-bw-{L}.pdf")
 PY
+done
 
-echo "== regua: mecanica"
-$SCAD -o regua/stl/regua_1-TRILHO.stl            -D 'part="trilho"' regua/regua.scad
-$SCAD -o regua/stl/regua_2-REGUA-DESLIZANTE.stl  -D 'part="regua"'   regua/regua.scad
-$SCAD -o regua/stl/regua_3-CORTINA.stl           -D 'part="cortina"' regua/regua.scad
+echo "== scale ruler: mechanics"
+$SCAD -o scale/stl/scale_1-TRACK.stl   -D 'part="track"'   scale/scale.scad
+$SCAD -o scale/stl/scale_2-SLIDER.stl  -D 'part="slider"'  scale/scale.scad
+$SCAD -o scale/stl/scale_3-SHUTTER.stl -D 'part="shutter"' scale/scale.scad
 
-echo "== regua: arte"
-( cd regua && python3 arte_regua.py )
-python3 - <<'PY'
-import cairosvg
+echo "== scale ruler: art"
+for L in $LANGS; do
+  ( cd scale && ART_LANG=$L python3 art_scale.py )
+  python3 - "$L" <<'PY'
+import sys, cairosvg
 from pypdf import PdfWriter
-cairosvg.svg2pdf(url="regua/arte_regua.svg",    write_to="/tmp/p1.pdf")
-cairosvg.svg2pdf(url="regua/arte_regua_p2.svg", write_to="/tmp/p2.pdf")
+L=sys.argv[1]
+cairosvg.svg2pdf(url="scale/art_scale.svg",    write_to="/tmp/p1.pdf")
+cairosvg.svg2pdf(url="scale/art_scale_p2.svg", write_to="/tmp/p2.pdf")
 w=PdfWriter()
 for f in ("/tmp/p1.pdf","/tmp/p2.pdf"): w.append(f)
-w.write("regua/pdf/arte-trilho.pdf"); w.close()
+w.write(f"scale/pdf/art-track-{L}.pdf"); w.close()
 PY
+done
 
-echo "pronto."
+echo "done."
