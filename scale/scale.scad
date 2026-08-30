@@ -25,11 +25,18 @@ PAP = 0.35;                 // paper recess
 // ---- the three channels --------------------------------------------------
 // Every level is the one below stepped inwards by LSTEP, which leaves a
 // LSTEP+... ledge for the plate above to rest on.
-C0 = 49.0;                  // half-width of the bottom channel floor
-LSTEP = 0.6;                // each level is this much narrower per side
+C0 = 49.0;                  // half-width of every channel floor
+// LSTEP MUST STAY 0. A plate does not rest on the channel floor -- it rests on
+// the LEDGE between the mouth of the channel below (TH(k-1)) and the floor of
+// its own (CH(k)). Narrowing each level eats that ledge from the outside: at
+// LSTEP=0.6 the ledge was 1.2 mm, the plate's bottom face overlapped it by
+// 0.25 mm, and pushed sideways by FIT it overlapped by -0.25 -- the plates in
+// channels 2 and 3 had nothing under them and dropped into the channel below.
+LSTEP = 0.0;
 V = 0.8;                    // straight run before the 45-degree undercut
-H = 2.6;                    // channel height: the ramp is H-V = 1.8 mm long,
-                            // which is what buys a loose fit AND a deep grip
+H = 2.8;                    // channel height: the ramp is H-V = 2.0 mm long,
+                            // which is what buys a loose fit, a deep grip AND
+                            // a ledge wide enough to carry the plate above
 function CH(k) = C0 - k*LSTEP;              // floor half-width of level k
 function TH(k) = CH(k) - (H-V);             // mouth half-width of level k
 function ZH(k) = BT + k*H;                  // floor height of level k
@@ -44,7 +51,11 @@ BCHF = 0.4;                 // relief on the bottom edge for the squished
 // narrower, so 0.15 and 0.25 per side both printed too tight to slide.
 FIT = 0.50;                 // per side; drop to 0.4 if your printer runs small
 function PLATE(k) = CH(k) - FIT;            // plate half-width for level k
-function GRIP(k)  = PLATE(k) - TH(k);       // dovetail grip per side = 1.3
+function GRIP(k)  = PLATE(k) - TH(k);       // dovetail grip per side
+// What actually holds a plate UP: its bottom face (already shy of the edge by
+// the elephant's-foot relief) sitting on the ledge, with the plate shoved as
+// far to one side as the play allows.
+function BEAR(k)  = (PLATE(k)-BCHF) - TH(k-1) - FIT;
 
 PAPW = 2*C0;                // the paper recess spans the WHOLE channel floor,
                             // so a plate is supported edge to edge whatever
@@ -58,9 +69,12 @@ assert(GRIP(0)-FIT >= 0.5, "level 1: plate can slide off its own ledge");
 assert(GRIP(1)-FIT >= 0.5, "level 2: plate can slide off its own ledge");
 assert(GRIP(2)-FIT >= 0.5, "level 3: plate can slide off its own ledge");
 assert(ST+FIT <= H, "a lifted plate reaches the channel above it");
+assert(BEAR(1) >= 0.4, "blade has no ledge left to sit on: it will drop into channel 1");
+assert(BEAR(2) >= 0.4, "slider has no ledge left to sit on: it will drop into channel 2");
 assert(ST-CHF == V, "plate chamfer no longer matches the channel profile");
 assert(PAPW >= 2*PLATE(0), "cassette wider than the paper recess");
-echo(str("fit: play ",FIT," mm/side  grip ",GRIP(0)," mm/side  gap to the level above ",H-ST-FIT," mm"));
+echo(str("fit: play ",FIT," mm/side  grip ",GRIP(0)," mm/side  ledge under a plate ",
+         BEAR(1)," mm at worst  gap to the level above ",H-ST-FIT," mm"));
 
 TUNING=[4,9,2,7,11,4];
 DIAT=[0,2,4,5,7,9,11]; PENT=[0,2,4,7,9];

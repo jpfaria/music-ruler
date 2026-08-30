@@ -46,11 +46,14 @@ A step-by-step guide to playing with it: [`docs/how-to-use.md`](docs/how-to-use.
 |---|---|---|
 | `harmonic-field/stl/field_1-BASE-DISC.stl` | ⌀118 × 15.3 mm | ~40 g |
 | `harmonic-field/stl/field_2-TOP-DISC.stl` | ⌀110 (+tab 120) × 8 mm | ~20 g |
-| `scale/stl/scale_1-TRACK.stl` | 280 × 108 × 10.8 mm | ~60 g |
-| `scale/stl/scale_2-SLIDER.stl` | 154 × 94.6 × 2.4 mm | ~25 g |
+| `scale/stl/scale_1-TRACK.stl` | 280 × 108 × 11.4 mm | ~60 g |
+| `scale/stl/scale_2-SLIDER.stl` | 154 × 97.0 × 2.4 mm | ~26 g |
 | `scale/stl/scale_3-CASSETTE.stl` | 224 × 97.0 × 1.8 mm | ~32 g |
-| `scale/stl/scale_4-BLADE.stl` | 181 × 95.8 × 1.8 mm | ~4 g |
-| `scale/stl/scale_0-FIT-COUPON.stl` | 125 × 108 × 9.2 mm | ~10 g |
+| `scale/stl/scale_4-BLADE.stl` | 181 × 97.0 × 1.8 mm | ~4 g |
+| `scale/stl/scale_0-FIT-COUPON.stl` | 125 × 108 × 9.8 mm | ~10 g |
+
+All three moving plates are the same width (97.0 mm) and every channel has the same
+profile, so a plate fits any of the three.
 
 Weights are the model volume, solid for the thin plates and at 20 % infill for the track;
 your slicer is the authority.

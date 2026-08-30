@@ -41,6 +41,10 @@ understanding which failure it prevents:
   into the recess the moment it slides out from under it.
 - **A lifted plate must not reach the channel above it.** Every channel is deliberately
   taller than its plate needs.
+- **Ask what a part rests ON, across its whole width, in the worst position.** Twice now
+  the same defect shipped: a plate balanced on ledges too narrow to hold it (a paper
+  recess narrower than the plate, then channels stepped inwards until the ledge vanished).
+  Both times the numbers that were asserted looked fine. Assert the bearing itself.
 - **A long tail hanging off a short body must keep the dovetail profile**, or it pitches
   down into the channel below and jams. The blade's tails are rails, not strips.
 - Changing `CW`, `RS` or `TUNING` means changing them in the `.scad` **and** in

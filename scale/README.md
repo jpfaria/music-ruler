@@ -6,11 +6,11 @@ that crop it.
 ## Printing
 | Part | Size | Weight | Quantity |
 |---|---|---|---|
-| `scale_1-TRACK.stl` | 280 × 108 × 10.8 mm | ~60 g | 1 |
-| `scale_2-SLIDER.stl` | 154 × 94.6 × 2.4 mm | ~25 g | 1 |
+| `scale_1-TRACK.stl` | 280 × 108 × 11.4 mm | ~60 g | 1 |
+| `scale_2-SLIDER.stl` | 154 × 97.0 × 2.4 mm | ~26 g | 1 |
 | `scale_3-CASSETTE.stl` | 224 × 97.0 × 1.8 mm | ~32 g | 1 |
-| `scale_4-BLADE.stl` | 181 × 95.8 × 1.8 mm | ~4 g | 1 |
-| `scale_0-FIT-COUPON.stl` | 125 × 108 × 9.2 mm | ~10 g | 1, first |
+| `scale_4-BLADE.stl` | 181 × 97.0 × 1.8 mm | ~4 g | 1 |
+| `scale_0-FIT-COUPON.stl` | 125 × 108 × 9.8 mm | ~10 g | 1, first |
 
 **Print the fit coupon first.** `scale_0-FIT-COUPON.stl` is a 20 mm stub of the track
 plus a section of each of the three plates. Slide each one into its own channel: it has to
@@ -32,7 +32,7 @@ Page 1 carries the two panels, page 2 the legend. Cut out one of the two rectang
 ### Assembly
 Glue the **shape label** into the recess on top of the slider before assembling (page 2
 of the PDF). The track has **three stacked channels**, each with its own dovetail profile
-and each stepped 0.6 mm narrower than the one below it:
+all three with the same profile — the plates are interchangeable:
 
 1. **bottom channel** — the cassette, sliding in from one of the ends
 2. **middle channel** — the blade, tails first
@@ -154,7 +154,13 @@ spacing is logarithmic, this would not work.
 ## Tuning it (`.scad`)
 - Anything stuck or rattling → **`FIT`**, the side clearance per side (0.50 mm). All three
   plate widths are derived from it (`PLATE(k) = CH(k) - FIT`), and the dovetail grip
-  follows: 1.3 mm per side on every level. Print the coupon before trusting a new value.
+  follows: 1.5 mm per side on every level. Print the coupon before trusting a new value.
+- **A plate does not rest on the channel floor — it rests on the ledge** between the mouth
+  of the channel below and the floor of its own, and that ledge is `H-V` wide. Stepping
+  each level inwards eats it: at 0.6 mm per level the ledge left only 0.25 mm under the
+  plate's bottom face, and −0.25 mm once the plate was pushed sideways by `FIT`, so the
+  blade and the slider simply dropped into the channel below. `LSTEP` is 0 and `BEAR(k)`
+  is asserted for that reason.
 - **Do not treat `FIT` as a CAD number.** A PETG plate leaves the bed wider than the model
   and the channel comes out narrower; 0.15 and 0.25 per side both printed too tight to
   slide. The bottom edge of every plate also carries a `BCHF` relief so the squished first
