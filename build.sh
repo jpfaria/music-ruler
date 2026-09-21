@@ -10,6 +10,7 @@ mkdir -p scale/stl scale/pdf harmonic-field/stl harmonic-field/pdf
 echo "== harmonic field: mechanics"
 $SCAD -o harmonic-field/stl/field_1-BASE-DISC.stl -D 'part="base"' harmonic-field/harmonic_field.scad
 $SCAD -o harmonic-field/stl/field_2-TOP-DISC.stl  -D 'part="top"'  harmonic-field/harmonic_field.scad
+$SCAD -o harmonic-field/stl/field_3-CAP.stl       -D 'part="cap"'  harmonic-field/harmonic_field.scad
 
 echo "== harmonic field: art"
 for L in $LANGS; do

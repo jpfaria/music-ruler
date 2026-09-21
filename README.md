@@ -44,8 +44,9 @@ A step-by-step guide to playing with it: [`docs/how-to-use.md`](docs/how-to-use.
 
 | Part | Size | Weight |
 |---|---|---|
-| `harmonic-field/stl/field_1-BASE-DISC.stl` | ⌀118 × 15.3 mm | ~40 g |
+| `harmonic-field/stl/field_1-BASE-DISC.stl` | ⌀118 × 19.0 mm | ~38 g |
 | `harmonic-field/stl/field_2-TOP-DISC.stl` | ⌀110 (+tab 120) × 8 mm | ~20 g |
+| `harmonic-field/stl/field_3-CAP.stl` | ⌀18.7 × 9.1 mm | ~2 g |
 | `scale/stl/scale_1-TRACK.stl` | 280 × 108 × 11.4 mm | ~60 g |
 | `scale/stl/scale_2-SLIDER.stl` | 154 × 97.0 × 2.4 mm | ~26 g |
 | `scale/stl/scale_3-CASSETTE.stl` | 224 × 97.0 × 1.8 mm | ~32 g |

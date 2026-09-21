@@ -1,7 +1,7 @@
 // ==========================================================================
 //  HARMONIC FIELD WHEEL -- "ruler" edition: mechanics only.
 //  The art (chords / degrees) goes on paper glued into the recesses.
-//  part = "base" | "top" | "all"
+//  part = "base" | "top" | "cap" | "all"
 // ==========================================================================
 part="all"; viz=0; $fn=110;
 
@@ -17,16 +17,30 @@ w3_o=20.0; w3_i=10.5;
 cel_h=13;      // half-opening of each cell (leaves a 4-degree frame)
 col=[-30,0,30];
 
-// snap-fit shaft (mechanism already verified in section view)
-post_od=9.4; post_wall=1.0; hook_od=11.6;
-hub_od=17.0; hub_h=6.0; bore_d=9.8;
-clear_z=0.5;                       // the hook always clears the hub by 0.5
-post_h=t_top+hub_h+clear_z; hook_land=1.2; post_top=post_h+hook_land+2.6;
-slot_w=1.6; slot_z0=0.5;
-// radial ledge = (hook_od-bore_d)/2 = 0.90 mm
-// strain: e = 3*t*d/(2*L^2) = 3*1.0*0.90/(2*8.0^2) = 2.1% -> fine in PETG
+// threaded shaft + printed cap nut. The shaft is solid: a smooth axle as tall as the top
+// disc, then a coarse thread. The cap bottoms out on the END of the shaft, never on the
+// disc, so it cannot be overtightened and the disc keeps clear_z of lift.
+post_od=9.4; hub_od=17.0; hub_h=6.0; bore_d=9.8;
+clear_z=0.5;                       // lift left to the disc: it has to climb the detents
+axle_h=t_top+hub_h+clear_z;
+thr_p=3.0; thr_e=0.5;              // pitch / half depth: flanks at ~46 deg, no supports
+thr_h=7.5;                         // 2.5 turns
+thr_c=0.35;                        // radial play between shaft and cap
+thr_r=post_od/2-thr_e;             // thread crest = axle diameter, so the disc slides over it
+cap_roof=1.6; cap_h=thr_h+cap_roof;
 r_det=53.5; bump_r=2.0; bump_h=0.40; dimp_r=2.2; dimp_h=0.55;
 
+assert(clear_z>=bump_h, "the disc cannot climb the detent bumps under the cap");
+assert(post_od<bore_d, "the thread crest does not pass through the top disc");
+assert(atan(2*PI*thr_e/thr_p)<=50, "thread flank too flat to print without supports");
+assert(thr_r-thr_e>=3.5, "thread core too thin");
+
+// single-start right-hand thread: a circle of radius r swept off-centre by thr_e.
+// Crest at r+thr_e, root at r-thr_e. Shaft and cap use the same sweep, so they mate.
+module thread(r,h){
+  linear_extrude(height=h,twist=-360*h/thr_p,slices=ceil(h/0.1),convexity=4)
+    translate([thr_e,0]) circle(r);
+}
 module at(a,r){ rotate([0,0,-a]) translate([0,r,0]) children(); }
 module sector2d(ri,ro,half,rd=1.2){
     offset(r=rd) offset(r=-rd)
@@ -55,18 +69,14 @@ module base_disc(){
       }
       for(a=[0,180]) at(a,r_det)                      // detent bumps
         translate([0,0,t_base-(bump_r-bump_h)]) sphere(r=bump_r,$fn=40);
-      translate([0,0,t_base]) difference(){           // snap-fit shaft
-        union(){
-          cylinder(h=post_h,r=post_od/2);
-          translate([0,0,post_h]) cylinder(h=hook_land,r=hook_od/2);
-          translate([0,0,post_h+hook_land])
-            cylinder(h=post_top-post_h-hook_land,r1=hook_od/2,r2=post_od/2-0.4);
-          rotate_extrude() translate([post_od/2,0,0])
-            difference(){ square([1.4,1.4]); translate([1.4,1.4]) circle(r=1.4,$fn=32); }
+      translate([0,0,t_base]){                        // threaded shaft
+        cylinder(h=axle_h,r=post_od/2);
+        translate([0,0,axle_h]) intersection(){
+          thread(thr_r,thr_h);
+          cylinder(h=thr_h,r1=post_od/2+thr_h-0.8,r2=post_od/2-0.8);   // lead-in chamfer
         }
-        translate([0,0,0.6]) cylinder(h=post_top,r=post_od/2-post_wall);
-        for(a=[0,90,180,270]) rotate([0,0,a])
-          translate([-slot_w/2,-post_od,slot_z0]) cube([slot_w,2*post_od,post_top]);
+        rotate_extrude() translate([post_od/2,0,0])
+          difference(){ square([1.4,1.4]); translate([1.4,1.4]) circle(r=1.4,$fn=32); }
       }
     }
     // ring recess for the paper disc
@@ -102,6 +112,22 @@ module top_disc(){
   }
 }
 
+// -------------------------------- CAP -------------------------------------
+// Modelled as assembled (mouth down, z=0 at the top of the axle). Printed roof-down.
+module cap(){
+  difference(){
+    union(){
+      cylinder(h=cap_h,r=hub_od/2);
+      for(i=[0:13]) at(i*25.7,hub_od/2) cylinder(h=cap_h,r=0.85);
+    }
+    translate([0,0,-0.01]) thread(thr_r+thr_c,thr_h+0.01);
+    translate([0,0,-0.01]) cylinder(h=1.0,r1=post_od/2+thr_c+0.8,r2=post_od/2+thr_c-0.2);
+  }
+}
+
 if(part=="base") base_disc();
 else if(part=="top") top_disc();
-else if(part=="all"){ base_disc(); translate([0,0,t_base]) top_disc(); }
+else if(part=="cap") translate([0,0,cap_h]) rotate([180,0,0]) cap();
+else if(part=="all"){ base_disc(); translate([0,0,t_base]) top_disc();
+                      translate([0,0,t_base+axle_h]) cap(); }
+else if(part=="probe") intersection(){ base_disc(); translate([0,0,t_base+axle_h]) cap(); }
