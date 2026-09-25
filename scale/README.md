@@ -73,6 +73,11 @@ starts the shape starts, where it ends the shape ends. **Top number = major key*
 The vertical lines fall on the **boundary frets**, which belong to both neighboring
 shapes — that is why the shapes join up instead of floating apart.
 
+### Which string is which
+The **6th string (low E) is the top line**, the 1st string the bottom one — the neck as
+you see it looking down while playing, not the tab order. The string number is printed at
+both ends of the paper, so one of them is always outside the slider.
+
 ### Which fret am I on
 Along the bottom edge of the slider there is **one window per column**. Each one shows a
 square split on the diagonal with **two** frets: on top, blue, the fret from 1 to 12;

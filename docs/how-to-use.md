@@ -7,6 +7,12 @@
 
 There is no step 3. That is the whole piece.
 
+## Which way up
+
+Hold it like the neck under your eyes: the **6th string (low E) is the top line**, the
+1st string the bottom one. The numbers at both ends of the paper say which string each
+line is.
+
 ## What each hole means
 
 | Hole | What it is | In G |

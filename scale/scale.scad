@@ -94,7 +94,9 @@ RAIL_I = 45.0;              // ... and stops short of the KEY window (44.5) and
 function degree(i,f) = (TUNING[i]+f+OFF)%12;
 function has(v,g) = len([for(a=v) if(a==g) 1])>0;
 function xc(f) = -((NF-1)/2)*CW + f*CW;
-function yc(i) = -((6-1)/2)*RS + i*RS;
+// i=0 is the 6th (lowest) string and sits on top, as the player sees the neck;
+// must match yi() in art_scale.py
+function yc(i) = ((6-1)/2)*RS - i*RS;
 
 // Plate: 45-degree chamfer on both long top edges (that is the dovetail face)
 // and a small relief on the bottom edges for the first-layer squish.

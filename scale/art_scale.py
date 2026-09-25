@@ -23,7 +23,7 @@ STR={
                "The vertical lines fall on the frets two neighboring shapes share.",
                "On the 6th string the two squares sit 12 frets apart: one to the other is an octave.",
                "Every note has its own color — the same one as on the harmonic field wheel.",
-               "Lowest string = bottom line. Glue the paper into the track recess."],
+               "Lowest string = top line. Glue the paper into the track recess."],
        "lab_title":"SHAPE LABEL — glue into the slider recess",
        "lab_note":"{w:.0f} × {h:.0f} mm · cut along the gray line · the second one is a spare",
        "lab_major":"major","lab_minor":"minor"},
@@ -40,7 +40,7 @@ STR={
                "Os traços verticais caem nas casas que duas formas vizinhas dividem.",
                "Na 6ª corda os dois quadrados ficam a 12 casas: de um ao outro é uma oitava.",
                "Cada nota tem sua cor — a mesma da roda de campo harmônico.",
-               "Corda mais grave = linha de baixo. Colar o papel no rebaixo do trilho."],
+               "Corda mais grave = linha de cima. Colar o papel no rebaixo do trilho."],
        "lab_title":"ETIQUETA DAS FORMAS — colar no rebaixo da régua",
        "lab_note":"{w:.0f} × {h:.0f} mm · recorte pela linha cinza · a segunda é reserva",
        "lab_major":"maior","lab_minor":"menor"},
@@ -57,7 +57,7 @@ STR={
                "Las líneas verticales caen en los trastes que comparten dos formas vecinas.",
                "En la 6ª cuerda los dos cuadrados quedan a 12 trastes: de uno a otro hay una octava.",
                "Cada nota tiene su color — el mismo de la rueda de campo armónico.",
-               "Cuerda más grave = línea de abajo. Pegar el papel en el rebaje del riel."],
+               "Cuerda más grave = línea de arriba. Pegar el papel en el rebaje del riel."],
        "lab_title":"ETIQUETA DE LAS FORMAS — pegar en el rebaje de la regla",
        "lab_note":"{w:.0f} × {h:.0f} mm · recorta por la línea gris · la segunda es de repuesto",
        "lab_major":"mayor","lab_minor":"menor"},
@@ -83,12 +83,15 @@ CW=10.2                      # fret width
 RS=11.2                      # string spacing
 PW,PH=272.0,98.0
 XN=21.0                      # nut
-Y0=21.0                      # 1st string (highest); strings 21.0 .. 77.0
+Y0=21.0                      # 6th string (lowest) on top, as seen from the player; strings 21.0 .. 77.0
 YT=9.8                       # center of the KEY strip
 YN=87.5                      # center of the fret-number chip
 MARKERS={3,5,7,9,12,15,17,19,21,24}
+SNF=3.4                      # string-number font size
+XSN_L=2.45                   # left margin, before the open-string cell
+XSN_R=XN+NF*CW+(PW-XN-NF*CW)/2   # right margin, after fret 24
 def xf(f): return XN+(f-0.5)*CW if f>0 else XN-10.0
-def yi(i): return Y0+(5-i)*RS
+def yi(i): return Y0+i*RS
 def xs(f): return XN+(f-1.5)*CW
 def key(f):
     pc=(TUNING[0]+f)%12
@@ -115,6 +118,10 @@ def panel(o,ox,oy):
         x=XN+f*CW
         o.append(f'<line x1="{x}" y1="{Y0}" x2="{x}" y2="{Y0+5*RS}" stroke="#c4c4c4" stroke-width=".4"/>')
     o.append(f'<line x1="{XN}" y1="{Y0-2.0}" x2="{XN}" y2="{Y0+5*RS+2.0}" stroke="#222" stroke-width="2.6"/>')
+    # string numbers at both ends of the paper, so one is always outside the slider
+    for i in range(6):
+        for x in (XSN_L, XSN_R):
+            o.append(f'<text x="{x}" y="{yi(i)}" font-size="{SNF}" fill="#555">{6-i}</text>')
     for i in range(6):
         for f in range(NF+1):
             pc=(TUNING[i]+f)%12; n=NOTES[pc]; nat=len(n)==1
@@ -179,9 +186,9 @@ JW,JH,JX,JYc=10.2,10.6,-71.4,39.2      # KEY window on the slider (.scad coordin
 FW,FH,FYc=8.8,7.4,-38.5                # fret-number windows
 err=[]
 if abs((Y0+2.5*RS)-PH/2)>0.01: err.append('strings off the paper center -> they miss the slider holes')
-if YT+4.9 > Y0-4.7-0.2: err.append("KEY strip touches the 1st string")
+if YT+4.9 > Y0-4.7-0.2: err.append("KEY strip touches the 6th string")
 if YN+3.5 > PH-1.0: err.append("fret-number chip runs off the paper")
-if Y0+5*RS+4.7 > YN-3.5: err.append("fret-number chip hits the 6th string")
+if Y0+5*RS+4.7 > YN-3.5: err.append("fret-number chip hits the 1st string")
 p0,p1=PH/2-(JYc+JH/2), PH/2-(JYc-JH/2)
 if not (p0<=YT-4.9 and p1>=YT+4.9): err.append(f"KEY window does not cover the cell ({p0:.2f}..{p1:.2f})")
 if JW/2 >= CW-4.9: err.append("KEY window shows the neighboring cell")
@@ -189,6 +196,9 @@ q0,q1=PH/2-(FYc+FH/2), PH/2-(FYc-FH/2)
 if not (q0<=YN-3.5 and q1>=YN+3.5): err.append(f"fret window does not cover the chip ({q0:.2f}..{q1:.2f})")
 if xs(1)-4.9 < 0: err.append("KEY cell of fret 1 runs off the paper")
 if XN+NF*CW+5 > PW: err.append("frets run past the paper width")
+if XSN_L+SNF*0.3 > xf(0)-12.2/2-0.3: err.append("left string number touches the open-string cell")
+if XSN_R-SNF*0.3 < xf(NF)+9.2/2+0.3: err.append("right string number touches fret 24")
+if XSN_R+SNF*0.3 > PW-0.5: err.append("right string number runs off the paper")
 
 W,H=297.0,210.0
 TXT_W=0.55                # rough character width factor, in font-size units
